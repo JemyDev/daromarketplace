@@ -1,0 +1,8 @@
+/* Footer */
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0 !important;
+  padding: 15px 0 !important;
+}
