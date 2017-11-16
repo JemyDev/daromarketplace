@@ -1,5 +1,10 @@
-/* Footer */
+/* General */
 
+.mb {
+  margin-bottom: 2em;
+}
+
+/* Footer */
 .footer {
   position: fixed;
   bottom: 0;
