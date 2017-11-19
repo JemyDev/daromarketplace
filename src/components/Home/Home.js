@@ -7,7 +7,7 @@ import Footer from './HomeComponents/Footer';
 class Home extends React.Component {
   render() {
     return (
-      <div className="row">
+      <div>
         <Header/>
         <Search/>
         <SearchFilters/>

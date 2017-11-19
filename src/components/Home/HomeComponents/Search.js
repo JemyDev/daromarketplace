@@ -1,19 +1,40 @@
 import React from 'react';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import {GridList, GridTile} from 'material-ui/GridList';
 
 class Search extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  onClick(event) {
+    event.preventDefault();
+  }
+
   render() {
     return (
-      <form className="col s12">
-        <div className="row">
-          <div className="input-field col s10">
-            <input placeholder="Chercher un item..." id="search-bar" type="text" />
-          </div>
-          <div className="input-field col s2">
-            <button className="btn waves-effect waves-light" type="submit" name="search">Rechercher
-              <i className="material-icons right">send</i>
-            </button>
-          </div>
-        </div>
+      <form id="general-search" className="mb-2 root">
+        <GridList cellHeight='auto' className="gridList" cols={12}>
+          <GridTile cols={10}>
+            <div className="mr-1">
+              <TextField
+                hintText="Entrez un mot clé..."
+                fullWidth={true}
+              />
+            </div>
+          </GridTile>
+          <GridTile cols={2}>
+            <div>
+              <RaisedButton
+                label="Rechercher"
+                primary={true}
+                fullWidth={true}
+              />
+            </div>
+          </GridTile>
+        </GridList>
       </form>
     )
   }

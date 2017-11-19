@@ -7,7 +7,8 @@
         "name": "+5 Medium Weapon Shadow",
         "category": "Autres",
         "price": "30.000.000",
-        "quantity": "1"
+        "quantity": "1",
+        "img": "./img/item_1.jpg"
       },
       "item_2": {
         "id": "1",
@@ -15,7 +16,8 @@
         "name": "Spiritual Earring Shadow",
         "category": "Autres",
         "price": "200.000.000",
-        "quantity": "3"
+        "quantity": "3",
+        "img": "./img/item_2.jpg"
       },
       "item_3": {
         "id": "2",
@@ -23,7 +25,8 @@
         "name": "Spiritual Pendant Shadow",
         "category": "Autres",
         "price": "60.000.000",
-        "quantity": "2"
+        "quantity": "2",
+        "img": "./img/item_3.jpg"
       },
       "item_4": {
         "id": "3",
@@ -31,7 +34,8 @@
         "name": "+7 Big Armor Shadow",
         "category": "Autres",
         "price": "150.000.000",
-        "quantity": "5"
+        "quantity": "5",
+        "img": "./img/item_4.jpg"
       },
       "item_5": {
         "id": "4",
@@ -39,8 +43,9 @@
         "name": "+7 Medium Weapon Shadow",
         "category": "Autres",
         "price": "125.000.000",
-        "quantity": "4"
+        "quantity": "4",
+        "img": "./img/item_5.jpg"
       }
 
     }
-}]
+}];
