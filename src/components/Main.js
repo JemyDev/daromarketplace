@@ -1,20 +1,44 @@
-require('normalize.css/normalize.css');
-require('styles/Helpers.css');
-require('styles/App.css');
+import 'normalize.css/normalize.css';
+import 'styles/App.css';
 
 import React from 'react';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import Home from './Home/Home'
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import Header from './Layout/Header';
+import Footer from './Layout/Footer';
+import Home from './Home/Home';
+import ShopList from './Shop/ShopList';
+import ShopDetail from './Shop/ShopDetail';
 
 class AppComponent extends React.Component {
+
   render() {
+
+    const DefaultLayout = ({component: Component, ...rest}) => {
+      return(
+        <Route {...rest} render={matchProps => (
+          <div>
+            <Header/>
+            <Component {...matchProps} />
+            <Footer/>
+          </div>
+        )} />
+      );
+    };
+
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-        <Home/>
-      </MuiThemeProvider>
+      <Router>
+        <div className="container">
+          <Switch>
+            <DefaultLayout path="/" component={Home} />
+          </Switch>
+          <Switch>
+            <DefaultLayout path="/shop_list" component={ShopList} />
+          </Switch>
+          <Switch>
+            <DefaultLayout path="/shop_detail:id" component={ShopDetail} />
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }

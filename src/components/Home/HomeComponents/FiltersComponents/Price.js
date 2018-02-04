@@ -33,7 +33,7 @@ class Price extends React.Component {
           name={this.props.name}
           min={this.min}
           max={this.max}
-          step={this.max / 100}
+          step={100}
           value={this.reverse(this.state.slider)}
           onChange={this.handleSlider}
         />
