@@ -1,9 +1,6 @@
 import React from 'react';
 import SearchFilters from './SearchFilters';
-import ShopList from '../../Shop/ShopList';
-import 'whatwg-fetch';
-
-const daroAPI = keyword => `https://daro.fr/api/api.php?m=shop&filtre=${keyword}`;
+import { Link } from 'react-router-dom';
 
 class Search extends React.Component {
 
@@ -11,8 +8,7 @@ class Search extends React.Component {
     super(props);
     this.state = {
       showFilters: false,
-      keyword: '',
-      shopData: []
+      keyword: ''
     };
     this.openSearchFilter = this.openSearchFilter.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -31,16 +27,10 @@ class Search extends React.Component {
 
   searchShops(event) {
     event.preventDefault();
-    fetch(daroAPI(this.state.keyword))
-    .then(res => res.json())
-    .then(res => {
-      this.setState({
-        shopData: res
-      });
-    })
   }
 
   render() {
+    //{this.state.shopData.length > 0 ? <ShopList shops={this.state.shopData}  /> : ''}
     return (
       <div id="search" className="col s12 center-align">
         <form className="col s12">
@@ -49,7 +39,8 @@ class Search extends React.Component {
               <input placeholder="Chercher un item..." id="search-bar" type="text" onChange={ this.handleChange } />
             </div>
             <div className="input-field col s2">
-              <button className="btn waves-effect waves-light" name="search" onClick={ this.searchShops }>Rechercher
+              <button className="btn waves-effect waves-light" name="search" onClick={ this.searchShops }>
+                <Link to={`/shops?keyword=${this.state.keyword}`}>Rechercher</Link>
                 <i className="material-icons right">send</i>
               </button>
             </div>
@@ -57,7 +48,6 @@ class Search extends React.Component {
         </form>
         <a title="Plus de filtres..." className="btn-floating btn-large waves-effect waves-light mb" onClick={this.openSearchFilter}><i className="material-icons">add</i></a>
         <SearchFilters showFilters={this.state.showFilters} />
-        {this.state.shopData.length > 0 ? <ShopList shops={this.state.shopData}  /> : ''}
       </div>
     )
   }

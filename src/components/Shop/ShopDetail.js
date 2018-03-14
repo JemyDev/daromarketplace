@@ -6,7 +6,11 @@ class ShopDetail extends React.Component {
     super(props);
   }
 
-  render() {}
+  render() {
+    return(
+      <h1>Shop detail</h1>
+    );
+  }
 }
 
 export default ShopDetail;

@@ -1,46 +1,22 @@
 /* General */
-body {
-  background-color: #212121;
+
+.mb {
+  margin-bottom: 1em;
 }
 
-.wave-separator {
-  color: #FFF;
-  font-weight: bold;
-  height: 100px;
-  line-height: 100px;
-  vertical-align: middle;
-}
-
-/* Grid System */
-.root, .root-child {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-}
-
-.gridList {
-  width: 90%;
-  padding: 0 20px;
-  height: auto;
-  overflow-y: 'auto';
-}
-
-.gridList-price {
-  width: 100%;
-  height: auto;
-}
-
-.slider-price {
-  padding: 0 10px;
-}
-
-.price_value {
-  color : #FFF;
+h1 a {
+    color: #FFF;
 }
 
 /* Form search */
 #search {
   position: relative;
+}
+
+button a {
+    color: #FFF;
+    display: block;
+    width: 100%;
 }
 
 #search_filters {

@@ -1,14 +1,4 @@
 import React from 'react';
-import {GridList, GridTile} from 'material-ui/GridList';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import RaisedButton from 'material-ui/RaisedButton';
-
-import CategoryList from './FiltersComponents/CategoryList';
-import RefineList from './FiltersComponents/RefineList';
-import Price from './FiltersComponents/Price';
-import HistorySaled from './FiltersComponents/HistorySaled';
-import CardPresence from './FiltersComponents/CardPresence';
 
 class SearchFilters extends React.Component {
 
