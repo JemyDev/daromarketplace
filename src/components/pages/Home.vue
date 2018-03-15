@@ -1,24 +1,23 @@
 <template>
   <div>
-    <!-- <search-bar /> -->
-
-    <!-- <ul>
-      <li v-for="(item, index) in items" :key="index">
-        {{ item.title }} - {{ item.prix }}
-      </li>
-    </ul> -->
+    <search-bar v-model="searchTerm" @search="search" />
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import SearchBar from '@/components/ui/SearchBar'
 
 export default {
-  computed: mapGetters({
-    items: 'allItems'
-  }),
-  created () {
-    this.$store.dispatch('getAllItems')
+  data() {
+    return {
+      searchTerm: ''
+    }
+  },
+  methods: {
+    search(searchTerm) {
+      this.$router.push({name: 'shops', query: {searchTerm: searchTerm} })
+    }
   }
 }
 </script>

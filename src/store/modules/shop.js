@@ -2,12 +2,14 @@ import DaroApi from "@/api/";
 
 // initial state
 const state = {
-  shop: {}
+  shop: {},
+  shopsByItem: {}
 };
 
 // getters
 const getters = {
-  shop: state => state.shop
+  shop: state => state.shop,
+  shopsByItem: state => state.shopsByItem
 };
 
 // actions
@@ -15,7 +17,12 @@ const actions = {
   getShop({ commit }, data) {
     DaroApi.getShop(shop => {
       commit("getShop", shop);
-    }, data.id)
+    }, data.id);
+  },
+  getShopsByItem({ commit }, data) {
+    DaroApi.getShopsByItems(shops => {
+      commit("getShopsByItem", shops);
+    }, data.searchTerm);
   }
 };
 
@@ -23,6 +30,9 @@ const actions = {
 const mutations = {
   getShop(state, shop) {
     state.shop = shop;
+  },
+  getShopsByItem(state, shops) {
+    state.shopsByItem = shops;
   }
 };
 
