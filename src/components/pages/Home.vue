@@ -1,6 +1,6 @@
 <template>
   <div>
-    <search-bar />
+    <!-- <search-bar /> -->
 
     <!-- <ul>
       <li v-for="(item, index) in items" :key="index">
@@ -14,11 +14,11 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  /* computed: mapGetters({
+  computed: mapGetters({
     items: 'allItems'
   }),
   created () {
     this.$store.dispatch('getAllItems')
-  } */
+  }
 }
 </script>
