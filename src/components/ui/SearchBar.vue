@@ -1,7 +1,6 @@
 <template>
   <form @submit.prevent="search">
     <input type="text" name="searchBar" v-model="searchTerm" />
-    {{searchTerm}}
   </form>
 </template>
 
