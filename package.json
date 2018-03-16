@@ -9,7 +9,9 @@
     "start": "node server.js",
     "startDev": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
-    "build": "node build/build.js"
+    "preinstall": "rm -rf /dist",
+    "build": "npm run preinstall && node build/build.js",
+    "deploy": "npm run build && git add . && git commit -m 'Deploy' && git push heroku master"
   },
   "dependencies": {
     "bootstrap": "^4.0.0",
