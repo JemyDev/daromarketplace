@@ -23,6 +23,7 @@ export default {
         search(searchTerm) {
             if (this.$route.name === 'shops') {
                 console.log('reload shops data')
+                this.$emit('updateItemList', {searchTerm})
             } else {
                 this.$router.push({name: 'shops', query: {searchTerm: searchTerm} })
             }

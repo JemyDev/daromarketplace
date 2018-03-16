@@ -1,24 +1,27 @@
 <template>
     <layout-main>
+        <h2>Résultat(s) pour la recherche : {{searchTerm}}</h2>
         <table class="table" v-if="items.length > 0">
-            <thead align="left">
-                <th>Magasin</th>
-                <th>Localisation</th>
-                <th>Nom objet</th>
-                <th>Prix</th>
+            <thead>
+                <tr>
+                    <th>Nom objet</th>
+                    <th class="text-right">Prix</th>
+                    <th>Vendeur</th>
+                    <th>Localisation</th>
+                </tr>
             </thead>
             <tr v-for="(item, index) in items" :key="index" @click="redirectToShop(item.id)">
+                <td>
+                    <img src="@/assets/img/ro-generic-card.jpg" :alt="item.name + '_icon'">
+                    <span valign="middle">{{item.name  | formatItemName}}</span>
+                </td>
+                <td align="right">{{item.prix | formatCurrency }}</td>
                 <td>{{item.title}}</td>
                 <td>
                     {{item.map}}, {{ item.x }}/{{ item.y }}
                     <!--<input type="hidden" v-model="copiedLocation" />
                     <button type="button" v-clipboard:copy="copiedLocation" v-clipboard:success="onCopy" v-clipboard:error="onError">Copier dans le clipboard</button>-->
                 </td>
-                <td>
-                    <img src="@/assets/img/ro-generic-card.jpg" :alt="item.name + '_icon'">
-                    <span valign="middle">{{item.name  | formatItemName}}</span>
-                </td>
-                <td align="right">{{item.prix | formatCurrency }}</td>
             </tr>
         </table>
         <div v-else class="alert alert-danger" role="alert">
@@ -35,6 +38,11 @@ export default {
     components: {
         LayoutMain
     },
+    data() {
+        return {
+            searchTerm: this.$route.query.searchTerm
+        }
+    },
     computed: mapGetters({
         items: 'shopsByItem'
     }),
@@ -44,7 +52,7 @@ export default {
         }
     },
     created () {
-        this.$store.dispatch('getShopsByItem', {searchTerm : this.$route.query.searchTerm});
+        this.$store.dispatch('getShopsByItem', {searchTerm : this.searchTerm});
     }
 }
 </script>
