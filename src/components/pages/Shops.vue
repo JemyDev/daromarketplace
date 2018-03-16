@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 import LayoutMain from '@/components/layouts/main'
 
 export default {
@@ -53,6 +53,10 @@ export default {
     },
     created () {
         this.$store.dispatch('getShopsByItem', {searchTerm : this.searchTerm});
+    },
+    updated() {
+        if (this.searchTerm !== this.$route.query.searchTerm)
+            this.searchTerm = this.$route.query.searchTerm
     }
 }
 </script>

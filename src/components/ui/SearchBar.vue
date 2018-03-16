@@ -2,7 +2,7 @@
   <form @submit.prevent="search" id="form-buscar">
     <div class="form-group">
       <div class="input-group">
-        <input type="search" name="searchBar" class="form-control" :class="customClasses" :placeholder="placeholder" v-model="searchTerm" />
+        <input type="search" name="searchBar" class="form-control" :class="cls" :placeholder="placeholder" v-model="searchTerm" />
         <span class="input-group-btn">
           <button class="btn btn-success" type="submit">
             <i class="fa fa-search"></i> Rechercher
@@ -19,7 +19,7 @@ import Vue from "vue";
 let SearchBar = Vue.component('search-bar', {
   data() {
    return {
-     searchTerm: ''
+     searchTerm: null
    }
  },
  props: {
@@ -27,7 +27,7 @@ let SearchBar = Vue.component('search-bar', {
      type: String,
      default: 'Rechercher un item...'
    },
-   customClasses: {
+   cls: {
      type: Array,
      default: () => { return [] }
    }
@@ -35,6 +35,8 @@ let SearchBar = Vue.component('search-bar', {
  methods: {
     search() {
       this.$emit('search', this.searchTerm)
+
+      this.searchTerm = null
     }
   }
 });
