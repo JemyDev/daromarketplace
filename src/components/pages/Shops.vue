@@ -18,7 +18,7 @@
                 <td align="right">{{item.refine}}</td>
             </tr>
         </table>
-    <layout-main>
+    </layout-main>
 </template>
 
 <script>
