@@ -5,7 +5,7 @@
                 <h1>Nom du shop - <small class="text-muted">{{ shop.shopInfo.title }}</small></h1>
                 <h2>Localisation - <small class="text-muted">{{ shop.shopInfo.map }} {{ shop.shopInfo.x }}/{{ shop.shopInfo.y }}</small></h2>
                 <h3>Liste des items</h3>
-                <table>
+                <table class="table">
                     <thead>
                         <tr>
                             <th>Nom</th>
@@ -14,8 +14,8 @@
                     </thead>
                     <tbody>
                         <tr v-for="(item, index) in shop.items" :key="index">
-                            <td>{{ item.name }}</td>
-                            <td>{{ item.prix | zenyCurrency }}</td>
+                            <td>{{ item.name | formatItemName }}</td>
+                            <td>{{ item.prix | formatCurrency }}</td>
                         </tr>
                     </tbody>
                 </table>

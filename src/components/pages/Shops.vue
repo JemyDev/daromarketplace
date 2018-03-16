@@ -1,19 +1,21 @@
 <template>
     <layout-main>
-        <table v-if="items != ''" cellspacing="10">
+        <table class="table" v-if="items != ''">
             <thead align="left">
                 <th>Magasin</th>
-                <th>Lieu</th>
+                <th>Localisation</th>
                 <th>Nom objet</th>
-                <th align="right">Prix</th>
-                <th align="right">Raffinage</th>
+                <th>Prix</th>
             </thead>
             <tr v-for="(item, index) in items" :key="index" @click="redirectToShop(item.id)">
                 <td>{{item.title}}</td>
-                <td>{{item.map}}</td>
-                <td>{{item.name}}</td>
-                <td align="right">{{item.prix | zenyCurrency }}</td>
-                <td align="right">{{item.refine}}</td>
+                <td>
+                    {{item.map}}, {{ item.x }}/{{ item.y }}
+                    <!--<input type="hidden" v-model="copiedLocation" />
+                    <button type="button" v-clipboard:copy="copiedLocation" v-clipboard:success="onCopy" v-clipboard:error="onError">Copier dans le clipboard</button>-->
+                </td>
+                <td>{{item.name  | formatItemName}}</td>
+                <td align="right">{{item.prix | formatCurrency }}</td>
             </tr>
         </table>
         <div v-else class="alert alert-danger" role="alert">
@@ -30,9 +32,10 @@ export default {
     components: {
         LayoutMain
     },
-    computed: mapGetters({
-        items: 'shopsByItem'
-    }),
+    computed: 
+        mapGetters({
+            items: 'shopsByItem'
+        }),
     methods: {
         redirectToShop(shopId) {
             this.$router.push({name: 'shop', params: {id: shopId}})

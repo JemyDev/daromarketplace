@@ -2,16 +2,19 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from "vue";
 import VueResource from "vue-resource";
+import VueClipboard from "vue-clipboard2";
 import App from "./App";
 import router from "./router";
 import store from "./store";
-import zenyCurrency from "./helpers/zenyCurrency";
+import filters from "./helpers/filters";
 
 Vue.config.productionTip = false;
 
-Vue.filter("zenyCurrency", zenyCurrency);
+Vue.filter("formatCurrency", filters.formatCurrency);
+Vue.filter("formatItemName", filters.formatItemName);
 
 Vue.use(VueResource);
+Vue.use(VueClipboard);
 
 Vue.prototype.$appName = "DARO Marketplace";
 
