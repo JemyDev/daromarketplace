@@ -16,16 +16,28 @@ export default {
     data() {
         return {
             searchTerm: '',
+            lastSearchTerm: null,
             cls: ['mr-sm-2']
         }
     },
     methods: {
         search(searchTerm) {
-            if (this.$route.name === 'shops') {
-                this.$emit('updateItemList', {searchTerm})
-            } else {
-                this.$router.push({name: 'shops', query: {searchTerm: searchTerm} })
+            if (this.lastSearchTerm && this.lastSearchTerm === searchTerm)
+                return
+
+            let routeQuery = {
+                query: { searchTerm }
             }
+
+            if (this.$route.name === 'shops') {
+                this.$store.dispatch('getShopsByItem', { searchTerm })
+            } else {
+                routeQuery.name = 'shops'
+            }
+
+            this.$router.push(routeQuery);
+
+            this.lastSearchTerm = searchTerm;
         }
     }
 };
