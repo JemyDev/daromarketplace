@@ -1,46 +1,40 @@
 <template>
     <layout-main>
         <h2>Résultat(s) pour la recherche : {{searchTerm}}</h2>
-        <table class="table" v-if="items.length > 0">
-            <thead>
-                <tr>
-                    <th>Nom objet</th>
-                    <th class="text-right">Prix</th>
-                    <th>Vendeur</th>
-                    <th>Localisation</th>
-                </tr>
-            </thead>
-            <tr v-for="(item, index) in items" :key="index" @click="redirectToShop(item.id)">
-                <td>
-                    <img src="@/assets/img/ro-generic-card.jpg" :alt="item.name + '_icon'">
-                    <span valign="middle">{{item.name  | formatItemName}}</span>
-                </td>
-                <td align="right">{{item.prix | formatCurrency }}</td>
-                <td>{{item.title}}</td>
-                <td>
-                    {{item.map}}, {{ item.x }}/{{ item.y }}
-                    <!--<input type="hidden" v-model="copiedLocation" />
-                    <button type="button" v-clipboard:copy="copiedLocation" v-clipboard:success="onCopy" v-clipboard:error="onError">Copier dans le clipboard</button>-->
-                </td>
-            </tr>
-        </table>
-        <div v-else class="alert alert-danger" role="alert">
-            Aucun shop trouvé !
-        </div>
+
+        <form id="search">
+            <span>Rechercher dans ce tableau :</span> <input name="query" v-model="tableSearchTerm">
+        </form>
+
+        <list-items
+            :data="items"
+            :columns="listColumns"
+            :filter-key="tableSearchTerm" />
+
     </layout-main>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import LayoutMain from '@/components/layouts/main'
+import ListItems from '@/components/ui/ListItems'
 
 export default {
     components: {
-        LayoutMain
+        LayoutMain,
+        ListItems
     },
     data() {
         return {
-            searchTerm: this.$route.query.searchTerm
+            searchTerm: this.$route.query.searchTerm,
+            tableSearchTerm: null,
+            listColumns: [
+                {key: 'name',   title: 'Nom objet', filters: ['formatItemName']},
+                {key: 'prix',   title: 'Prix', align: 'right', filters: ['formatCurrency']},
+                {key: 'refine', title: 'Reffinage'},
+                {key: 'title',  title: 'Vendeur'},
+                {key: 'map',    title: 'Emplacement'}
+            ]
         }
     },
     computed: mapGetters({
@@ -57,6 +51,8 @@ export default {
     updated() {
         if (this.searchTerm !== this.$route.query.searchTerm)
             this.searchTerm = this.$route.query.searchTerm
+
+
     }
 }
 </script>
