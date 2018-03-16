@@ -14,15 +14,11 @@ const getters = {
 
 // actions
 const actions = {
-  getShop({ commit }, data) {
-    DaroApi.getShop(shop => {
-      commit("getShop", shop);
-    }, data.id);
+  async getShop({ commit }, data) {
+    commit("getShop", await DaroApi.getShop(data.id));
   },
-  getShopsByItem({ commit }, data) {
-    DaroApi.getShopsByItems(shops => {
-      commit("getShopsByItem", shops);
-    }, data.searchTerm);
+  async getShopsByItem({ commit }, data) {
+    commit("getShopsByItem", await DaroApi.getShopsByItems(data.searchTerm));
   }
 };
 

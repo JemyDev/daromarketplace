@@ -1,6 +1,6 @@
 <template>
     <layout-main>
-        <table class="table" v-if="isShops">
+        <table class="table" v-if="items.length > 0">
             <thead align="left">
                 <th>Magasin</th>
                 <th>Localisation</th>
@@ -14,7 +14,10 @@
                     <!--<input type="hidden" v-model="copiedLocation" />
                     <button type="button" v-clipboard:copy="copiedLocation" v-clipboard:success="onCopy" v-clipboard:error="onError">Copier dans le clipboard</button>-->
                 </td>
-                <td>{{item.name  | formatItemName}}</td>
+                <td>
+                    <img src="@/assets/img/ro-generic-card.jpg" :alt="item.name + '_icon'">
+                    <span valign="middle">{{item.name  | formatItemName}}</span>
+                </td>
                 <td align="right">{{item.prix | formatCurrency }}</td>
             </tr>
         </table>
@@ -32,15 +35,9 @@ export default {
     components: {
         LayoutMain
     },
-    data() {
-        return {
-            isShops: Object.keys(this.$store.state.shop.shopsByItem).length === 0
-        }
-    },
-    computed: 
-        mapGetters({
-            items: 'shopsByItem'
-        }),
+    computed: mapGetters({
+        items: 'shopsByItem'
+    }),
     methods: {
         redirectToShop(shopId) {
             this.$router.push({name: 'shop', params: {id: shopId}})
