@@ -5,11 +5,11 @@ import VueResource from "vue-resource";
 import App from "./App";
 import router from "./router";
 import store from "./store";
-//import { zenyCurrency } from "./helpers/zenycurrency";
+import zenyCurrency from "./helpers/zenyCurrency";
 
 Vue.config.productionTip = false;
 
-//Vue.filter("zenyCurrency", zenyCurrency);
+Vue.filter("zenyCurrency", zenyCurrency);
 
 Vue.use(VueResource);
 
