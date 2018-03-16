@@ -18,7 +18,12 @@ export default {
     },
     methods: {
         search(searchTerm) {
-            this.$router.push({name: 'shops', query: {searchTerm: searchTerm} })
+            let currentRoute = this.$route.path;
+            if(currentRoute = '/shops') {
+                this.$router.query.searchTerm = searchTerm
+            } else {
+                this.$router.push({name: 'shops', query: {searchTerm: searchTerm} })
+            }
         }
     }
 };

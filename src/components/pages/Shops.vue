@@ -1,6 +1,6 @@
 <template>
     <layout-main>
-        <table class="table" v-if="items != ''">
+        <table class="table" v-if="isShops">
             <thead align="left">
                 <th>Magasin</th>
                 <th>Localisation</th>
@@ -31,6 +31,11 @@ import LayoutMain from '@/components/layouts/main'
 export default {
     components: {
         LayoutMain
+    },
+    data() {
+        return {
+            isShops: Object.keys(this.$store.state.shop.shopsByItem).length === 0
+        }
     },
     computed: 
         mapGetters({
