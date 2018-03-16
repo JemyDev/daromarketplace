@@ -1,8 +1,6 @@
 <template>
     <layout-main>
-        <p>{{ $route.params.searchTerm }}</p>
-
-        <table cellspacing="10">
+        <table v-if="items != ''" cellspacing="10">
             <thead align="left">
                 <th>Magasin</th>
                 <th>Lieu</th>
@@ -18,6 +16,9 @@
                 <td align="right">{{item.refine}}</td>
             </tr>
         </table>
+        <div v-else class="alert alert-danger" role="alert">
+            Aucun shop trouvé !
+        </div>
     </layout-main>
 </template>
 

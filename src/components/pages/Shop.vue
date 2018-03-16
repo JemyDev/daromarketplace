@@ -15,7 +15,7 @@
                     <tbody>
                         <tr v-for="(item, index) in shop.items" :key="index">
                             <td>{{ item.name }}</td>
-                            <td>{{ item.prix }}</td>
+                            <td>{{ item.prix | zenyCurrency }}</td>
                         </tr>
                     </tbody>
                 </table>
