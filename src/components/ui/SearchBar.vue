@@ -35,6 +35,7 @@ let SearchBar = Vue.component('search-bar', {
  methods: {
     search() {
       this.$emit('search', this.searchTerm)
+      this.$emit('updateItemList', this.searchTerm)
     }
   }
 });
