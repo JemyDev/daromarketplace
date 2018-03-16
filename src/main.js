@@ -13,6 +13,8 @@ Vue.config.productionTip = false;
 
 Vue.use(VueResource);
 
+Vue.prototype.$appName = "DARO Marketplace";
+
 /* eslint-disable no-new */
 const app = new Vue({
   el: "#app",

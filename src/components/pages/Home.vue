@@ -1,6 +1,14 @@
 <template>
   <layout-main>
-    <search-bar v-model="searchTerm" @search="search" />
+    <div class="row justify-content-center" style="margin-top: 8%;">
+      <div class="col col-md-6">
+          <div id="logo" class="text-center">
+            <h1>{{ $appName }}</h1>
+            <p>Retrouvez tous les shops du serveur Ragnarok DARO !</p>
+          </div>
+        <search-bar v-model="searchTerm" @search="search" />
+      </div>
+    </div>
   </layout-main>
 </template>
 
@@ -25,3 +33,7 @@ export default {
   }
 }
 </script>
+
+<style>
+@import '../../assets/css/Home.css';
+</style>

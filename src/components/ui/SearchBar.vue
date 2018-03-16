@@ -1,6 +1,15 @@
 <template>
-  <form @submit.prevent="search">
-    <input type="text" name="searchBar" v-model="searchTerm" />
+  <form @submit.prevent="search" id="form-buscar">
+    <div class="form-group">
+      <div class="input-group">
+        <input type="search" name="searchBar" class="form-control" :class="customClasses" :placeholder="placeholder" v-model="searchTerm" />
+        <span class="input-group-btn">
+          <button class="btn btn-success" type="submit">
+            <i class="fa fa-search"></i> Rechercher
+          </button>
+        </span>
+      </div>
+    </div>
   </form>
 </template>
 
@@ -11,6 +20,16 @@ let SearchBar = Vue.component('search-bar', {
   data() {
    return {
      searchTerm: ''
+   }
+ },
+ props: {
+   placeholder: {
+     type: String,
+     default: 'Rechercher un item...'
+   },
+   customClasses: {
+     type: Array,
+     default: () => { return [] }
    }
  },
  methods: {

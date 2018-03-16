@@ -1,18 +1,22 @@
 <template>
-  <div class="main-layout">
-    <header>
-      <nav>
-        <router-link to="/">Home</router-link> |
-        <router-link to="/about">About</router-link>
-      </nav>
-    </header>
-    <hr>
-
-    <slot/>
-
-    <hr>
-    <footer>
-      Site footer
-    </footer>
+  <div>
+    <Header v-if="currentRoot != '/'"></Header>
+    <section class="container">
+      <slot/>
+    </section>
   </div>
 </template>
+
+<script>
+import Header from '@/components/layouts/Header'
+export default {
+  data() {
+    return {
+      currentRoot: this.$route.path
+    }
+  },
+  components: {
+    Header
+  }
+};
+</script>

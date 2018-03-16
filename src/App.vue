@@ -1,21 +1,16 @@
 <template>
-  <div id="app">
-    <header>
-      <h1>Daro marketplace</h1>
-      <search-bar v-if="!isHome" />
-    </header>
-
-    <router-view/>
-  </div>
+  <main id="app">
+      <router-view/>
+  </main>
 </template>
 
 <script>
 export default {
   name: 'App',
-  data() {
-    return {
-      isHome: true
-    }
-  }
 }
 </script>
+
+<style>
+@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+@import '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css';
+</style>
