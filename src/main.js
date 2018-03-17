@@ -8,6 +8,7 @@ import App from "./App"
 import router from "./router"
 import store from "./store"
 import * as filters from "./helpers/filters"
+import * as constants from "./helpers/constants"
 
 Vue.config.productionTip = false
 
@@ -20,9 +21,9 @@ Vue.use(VueClipboard)
 
 sync(store, router)
 
-Vue.http.options.root = 'https://daro.fr/api/api.php';
+Vue.http.options.root = constants.rootApi
 
-Vue.prototype.$appName = "DARO Marketplace"
+Vue.prototype.$appName = constants.appName
 
 /* eslint-disable no-new */
 const app = new Vue({
