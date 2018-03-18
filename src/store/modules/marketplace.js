@@ -3,13 +3,15 @@ import DaroApi from "@/api/";
 // initial state
 const state = {
   shop: {},
-  shopsByItem: {}
+  shopsByItem: {},
+  allShops: {}
 };
 
 // getters
 const getters = {
   shop: state => state.shop,
-  shopsByItem: state => state.shopsByItem
+  shopsByItem: state => state.shopsByItem,
+  allShops: state => state.allShops
 };
 
 // actions
@@ -19,16 +21,22 @@ const actions = {
   },
   async getShopsByItem({ commit }, data) {
     commit("getShopsByItem", await DaroApi.getShopsByItems(data.searchTerm));
+  },
+  async allShops({ commit }) {
+    commit("allShops");
   }
 };
 
 // mutations
 const mutations = {
   getShop(state, shop) {
-    state.shop = shop;
+    state.shop = shop
   },
   getShopsByItem(state, shops) {
-    state.shopsByItem = shops;
+    state.shopsByItem = shops
+  },
+  allShops(state, shops) {
+    state.shops = shops
   }
 };
 
