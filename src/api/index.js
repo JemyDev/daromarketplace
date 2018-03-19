@@ -22,5 +22,15 @@ export default {
     );
 
     return response;
+  },
+  async allShops() {
+    let response = await Vue.http.get('?m=shopList').then(
+      response => response.body,
+      response => {
+        console.error("Api call failed");
+      }
+    );
+
+    return response;
   }
 };
