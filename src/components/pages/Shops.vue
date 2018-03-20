@@ -13,10 +13,10 @@
             </template>
 
             <sortable-table
-                v-if="items.length > 0"
                 :datas="items"
                 :columns="listColumns"
-                :filter-key="tableSearchTerm" />
+                :filter-key="tableSearchTerm"
+                :on-row-click="redirectToShop" />
         </v-loading>
 
     </layout-main>
@@ -52,7 +52,12 @@ export default {
     computed: mapGetters({
         items: 'shopsByItem'
     }),
-    created () {
+    methods: {
+        redirectToShop(shopId) {
+            this.$root.$router.push({name: 'shop', params: {id: shopId}})
+        }
+    },
+    created() {
         this.$store.dispatch('getShopsByItem', {searchTerm : this.searchTerm})
     },
     updated() {

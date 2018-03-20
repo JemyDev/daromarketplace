@@ -13,7 +13,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(entry, index) in filteredData" :key="index" @click="redirectToShop(entry.id)">
+      <tr v-for="(entry, index) in filteredData" :key="index" @click="onSingleRowClick(entry)">
         <td v-for="(obj, index) in columns" :key="index"
           :class="{ 'text-right': obj.align === 'right' }">
           {{entry[obj.name]}}
@@ -36,7 +36,8 @@ export default Vue.component('sortable-table', {
   props: {
     datas: { default: () => [], type: [Array, Object, String] },
     columns: Array,
-    filterKey: String
+    filterKey: String,
+    onRowClick: Function
   },
   data () {
     let sortOrders = {}
@@ -76,8 +77,8 @@ export default Vue.component('sortable-table', {
     }
   },
   methods: {
-    redirectToShop(shopId) {
-      this.$root.$router.push({name: 'shop', params: {id: shopId}})
+    onSingleRowClick(data) {
+      this.onRowClick(data.id);
     },
     getImageSrc(itemId) {
         return helpers.getImageItem(itemId);
