@@ -7,7 +7,7 @@
             <input name="query" v-model="tableSearchTerm">
         </form>
 
-        <sortable-table
+        <sortable-table v-if="items.length > 0"
             :data="items"
             :columns="listColumns"
             :filterKey="tableSearchTerm" />

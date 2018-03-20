@@ -46,8 +46,7 @@ export default Vue.component('sortable-table', {
 
     return {
       sortKey: '',
-      sortOrders: sortOrders,
-      localData: this.data
+      sortOrders: sortOrders
     }
   },
   computed: {
@@ -56,9 +55,7 @@ export default Vue.component('sortable-table', {
       let filterKey = this.filterKey && this.filterKey.toLowerCase()
       let order = this.sortOrders[sortKey] || 1
 
-      console.log(this.localData);
-
-      let data = this.localData;
+      let data = this.data;
 
       if (filterKey) {
         data = data.filter(function (row) {
