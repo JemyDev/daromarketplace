@@ -1,5 +1,6 @@
  <template>
-  <table class="table">
+ <div class="table-wrapper">
+   <table class="table">
     <thead>
       <tr>
         <th v-for="(obj, index) in columns" :key="index"
@@ -21,6 +22,10 @@
       </tr>
     </tbody>
   </table>
+   <div v-if="filteredData.length === 0">
+        <p>Aucun résultat</p>
+    </div>
+ </div>
 </template>
 
 <script>
@@ -28,7 +33,7 @@ import Vue from 'Vue'
 
 export default Vue.component('sortable-table', {
   props: {
-    data: Array,
+    data: { default: () => [], type: [Array, Object] },
     columns: Array,
     filterKey: String
   },
@@ -73,10 +78,11 @@ export default Vue.component('sortable-table', {
     }
   },
   methods: {
+
     sortBy: function (key) {
       this.sortKey = key
       this.sortOrders[key] = this.sortOrders[key] * -1
-    },
+    }/* ,
     dynamicFilters: function (value, filters) {
       if (!filters)
         return value;
@@ -86,7 +92,7 @@ export default Vue.component('sortable-table', {
       })
 
       return value;
-    }
+    } */
   }
 })
 
