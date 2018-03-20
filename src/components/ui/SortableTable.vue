@@ -33,7 +33,7 @@ import Vue from 'Vue'
 
 export default Vue.component('sortable-table', {
   props: {
-    datas: { default: () => [], type: [Array, Object] },
+    datas: { default: () => [], type: [Array, Object, String] },
     columns: Array,
     filterKey: String
   },
@@ -46,7 +46,8 @@ export default Vue.component('sortable-table', {
 
     return {
       sortKey: '',
-      sortOrders: sortOrders
+      sortOrders: sortOrders,
+      localData: this.data
     }
   },
   computed: {

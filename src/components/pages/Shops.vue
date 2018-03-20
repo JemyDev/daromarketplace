@@ -11,7 +11,7 @@
             v-if="items.length > 0"
             :datas="items"
             :columns="listColumns"
-            :filter-key="tableSearchTerm" />
+            :filterKey="tableSearchTerm" />
 
     </layout-main>
 </template>
@@ -57,8 +57,6 @@ export default {
     updated() {
         if (this.searchTerm !== this.$route.query.searchTerm)
             this.searchTerm = this.$route.query.searchTerm
-
-
     }
 }
 </script>
