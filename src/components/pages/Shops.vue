@@ -48,7 +48,7 @@ export default {
             this.$router.push({name: 'shop', params: {id: shopId}})
         },
         getImageSrc(itemId) {
-            return helpers.getImageItem(itemId);
+            return helpers.getImageItem(itemId)
         }
     },
     created () {

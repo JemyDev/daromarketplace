@@ -32,7 +32,7 @@ const mutations = {
     state.shopsByItem = shops
   },
   allShops(state, shops) {
-    state.shops = shops
+    state.allShops = shops
   }
 };
 
