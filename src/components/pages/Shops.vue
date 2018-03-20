@@ -8,7 +8,8 @@
         </form>
 
         <sortable-table
-            :data="items"
+            v-if="items.length > 0"
+            :datas="items"
             :columns="listColumns"
             :filter-key="tableSearchTerm" />
 
