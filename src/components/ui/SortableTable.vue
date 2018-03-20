@@ -1,12 +1,12 @@
-<template>
+ <template>
   <table class="table">
     <thead>
       <tr>
         <th v-for="(obj, index) in columns" :key="index"
-          @click="sortBy(obj.index)"
-          :class="{ active: sortKey == obj.index, 'text-right': obj.align === 'right' }">
-          {{ obj.title }}
-          <span class="arrow" :class="sortOrders[index] > 0 ? 'asc' : 'dsc'">
+          @click="sortBy(obj.name)"
+          :class="{ active: sortKey == obj.name, 'text-right': obj.align === 'right' }">
+          {{ obj.label }}
+          <span class="arrow" :class="sortOrders[obj.name] > 0 ? 'asc' : 'dsc'">
           </span>
         </th>
       </tr>
@@ -15,8 +15,8 @@
       <tr v-for="(entry, index) in filteredData" :key="index">
         <td v-for="(obj, index) in columns" :key="index"
           :class="{ 'text-right': obj.align === 'right' }">
-          {{entry[obj.index]}}
-          <!--{{dynamicFilters(entry[obj.key], obj.filters)}}-->
+          {{entry[obj.name]}}
+          <!-- {{dynamicFilters(entry[obj.key], obj.filters)}}   -->
         </td>
       </tr>
     </tbody>
@@ -26,8 +26,12 @@
 <script>
 import Vue from 'Vue'
 
-let ListItems = Vue.component('list-items', {
-  props: ['data', 'columns', 'filterKey'],
+export default Vue.component('sortable-table', {
+  props: {
+    data: Array,
+    columns: Array,
+    filterKey: String
+  },
   data: function () {
     let sortOrders = {}
 
@@ -82,10 +86,8 @@ let ListItems = Vue.component('list-items', {
       })
 
       return value;
-
     }
   }
 })
 
-export default ListItems
 </script>
