@@ -1,9 +1,9 @@
 import Vue from "vue";
 
 export default {
-  async getShopsByItems(searchTerm) {
+  async getShopsByItems(q) {
     let response = await Vue.http
-      .get(`?m=shop&filtre=${searchTerm}`)
+      .get(`?m=shop&filtre=${q}`)
       .then(
         response => response.body,
         response => {
