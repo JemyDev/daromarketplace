@@ -7,11 +7,16 @@
             <p>Retrouvez tous les shops du serveur Ragnarok DARO !</p>
           </div>
         <search-bar v-model="searchTerm" @search="search" />
-        <sortable-table
-            v-if="items.length > 0"
-            :datas="items"
-            :columns="listColumns"
-            :filterKey="tableSearchTerm" />
+        <v-loading loader='load all by shops'>
+            <template slot='spinner'>
+                <v-loading-spinner height='60px' width='60px' />
+            </template>
+
+            <sortable-table
+                :datas="items"
+                :columns="listColumns"
+                :filter-key="tableSearchTerm" />
+        </v-loading>
       </div>
     </div>
   </layout-main>
@@ -19,6 +24,8 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import vLoading from 'vuex-loading/src/v-loading.vue'
+import vLoadingSpinner from 'vuex-loading/src/spinners/spinner.vue'
 import LayoutMain from '@/components/layouts/main'
 import SearchBar from '@/components/ui/SearchBar'
 import SortableTable from '@/components/ui/SortableTable'
@@ -26,7 +33,12 @@ import SortableTable from '@/components/ui/SortableTable'
 export default {
   components: {
     LayoutMain,
-    SortableTable
+    SortableTable,
+    vLoading,
+    vLoadingSpinner
+  },
+  mounted: function() {
+    this.allShops();
   },
   data() {
     return {
@@ -44,12 +56,12 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'allShops'
+    ]),
     search(searchTerm) {
       this.$router.push({name: 'shops', query: {searchTerm: searchTerm} })
     }
-  },
-  created() {
-    this.$store.dispatch('allShops');
   }
 }
 </script>

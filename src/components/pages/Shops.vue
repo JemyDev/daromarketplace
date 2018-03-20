@@ -13,7 +13,6 @@
             </template>
 
             <sortable-table
-                v-if="items.length > 0"
                 :datas="items"
                 :columns="listColumns"
                 :filter-key="tableSearchTerm" />
