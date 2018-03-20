@@ -5,11 +5,10 @@
         <form id="search">
             <span>Rechercher dans ce tableau :</span> <input name="query" v-model="tableSearchTerm">
         </form>
-
         <list-items
             :data="items"
             :columns="listColumns"
-            :filter-key="tableSearchTerm" />
+            :filterKey="tableSearchTerm" />
 
     </layout-main>
 </template>
@@ -38,6 +37,11 @@ export default {
             ]
         }
     },
+    computed: {
+        items() {
+            return this.$store.state.marketplace.shopsByItem;
+        }
+    },
     methods: {
         redirectToShop(shopId) {
             this.$router.push({name: 'shop', params: {id: shopId}})
@@ -52,8 +56,6 @@ export default {
     updated() {
         if (this.searchTerm !== this.$route.query.searchTerm)
             this.searchTerm = this.$route.query.searchTerm
-
-
     }
 }
 </script>

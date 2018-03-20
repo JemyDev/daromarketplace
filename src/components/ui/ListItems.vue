@@ -3,10 +3,10 @@
     <thead>
       <tr>
         <th v-for="(obj, index) in columns" :key="index"
-          @click="sortBy(obj.key)"
-          :class="{ active: sortKey == obj.key, 'text-right': obj.align === 'right' }">
+          @click="sortBy(obj.index)"
+          :class="{ active: sortKey == obj.index, 'text-right': obj.align === 'right' }">
           {{ obj.title }}
-          <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
+          <span class="arrow" :class="sortOrders[index] > 0 ? 'asc' : 'dsc'">
           </span>
         </th>
       </tr>
@@ -15,8 +15,8 @@
       <tr v-for="(entry, index) in filteredData" :key="index">
         <td v-for="(obj, index) in columns" :key="index"
           :class="{ 'text-right': obj.align === 'right' }">
-          {{entry[obj.key]}}
-          <!-- {{dynamicFilters(entry[obj.key], obj.filters)}} -->
+          {{entry[obj.index]}}
+          <!--{{dynamicFilters(entry[obj.key], obj.filters)}}-->
         </td>
       </tr>
     </tbody>
@@ -26,12 +26,8 @@
 <script>
 import Vue from 'Vue'
 
-let ListItem = Vue.component('list-item', {
-  props: {
-    data: Array,
-    columns: Array,
-    filterKey: String
-  },
+let ListItems = Vue.component('list-items', {
+  props: ['data', 'columns', 'filterKey'],
   data: function () {
     let sortOrders = {}
 
@@ -41,7 +37,8 @@ let ListItem = Vue.component('list-item', {
 
     return {
       sortKey: '',
-      sortOrders: sortOrders
+      sortOrders: sortOrders,
+      localData: this.data
     }
   },
   computed: {
@@ -49,7 +46,10 @@ let ListItem = Vue.component('list-item', {
       let sortKey = this.sortKey
       let filterKey = this.filterKey && this.filterKey.toLowerCase()
       let order = this.sortOrders[sortKey] || 1
-      let data = this.data
+
+      console.log(this.localData);
+
+      let data = this.localData;
 
       if (filterKey) {
         data = data.filter(function (row) {
@@ -87,5 +87,5 @@ let ListItem = Vue.component('list-item', {
   }
 })
 
-export default ListItem
+export default ListItems
 </script>
