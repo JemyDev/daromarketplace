@@ -33,11 +33,11 @@ import Vue from 'Vue'
 
 export default Vue.component('sortable-table', {
   props: {
-    data: { default: () => [], type: [Array, Object] },
+    datas: { default: () => [], type: [Array, Object, String] },
     columns: Array,
     filterKey: String
   },
-  data: function () {
+  data () {
     let sortOrders = {}
 
     this.columns.forEach(function (key) {
@@ -50,12 +50,11 @@ export default Vue.component('sortable-table', {
     }
   },
   computed: {
-    filteredData: function () {
+    filteredData () {
       let sortKey = this.sortKey
       let filterKey = this.filterKey && this.filterKey.toLowerCase()
       let order = this.sortOrders[sortKey] || 1
-
-      let data = this.data;
+      let data = this.datas
 
       if (filterKey) {
         data = data.filter(function (row) {
@@ -71,11 +70,11 @@ export default Vue.component('sortable-table', {
           return (a === b ? 0 : a > b ? 1 : -1) * order
         })
       }
+
       return data
     }
   },
   methods: {
-
     sortBy: function (key) {
       this.sortKey = key
       this.sortOrders[key] = this.sortOrders[key] * -1
