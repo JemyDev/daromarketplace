@@ -11,13 +11,12 @@
             v-if="items.length > 0"
             :datas="items"
             :columns="listColumns"
-            :filterKey="tableSearchTerm" />
+            :filter-key="tableSearchTerm" />
 
     </layout-main>
 </template>
 
 <script>
-import helpers from '@/helpers/helpers'
 import { mapGetters } from 'vuex'
 import LayoutMain from '@/components/layouts/main'
 import SortableTable from '@/components/ui/SortableTable'
@@ -43,20 +42,14 @@ export default {
     computed: mapGetters({
         items: 'shopsByItem'
     }),
-    methods: {
-        redirectToShop(shopId) {
-            this.$router.push({name: 'shop', params: {id: shopId}})
-        },
-        getImageSrc(itemId) {
-            return helpers.getImageItem(itemId);
-        }
-    },
     created () {
         this.$store.dispatch('getShopsByItem', {searchTerm : this.searchTerm})
     },
     updated() {
         if (this.searchTerm !== this.$route.query.searchTerm)
             this.searchTerm = this.$route.query.searchTerm
+
+
     }
 }
 </script>

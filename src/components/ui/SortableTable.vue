@@ -13,7 +13,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(entry, index) in filteredData" :key="index">
+      <tr v-for="(entry, index) in filteredData" :key="index" @click="redirectToShop(entry.id)">
         <td v-for="(obj, index) in columns" :key="index"
           :class="{ 'text-right': obj.align === 'right' }">
           {{entry[obj.name]}}
@@ -30,6 +30,7 @@
 
 <script>
 import Vue from 'Vue'
+import helpers from '@/helpers/helpers'
 
 export default Vue.component('sortable-table', {
   props: {
@@ -46,8 +47,7 @@ export default Vue.component('sortable-table', {
 
     return {
       sortKey: '',
-      sortOrders: sortOrders,
-      localData: this.data
+      sortOrders: sortOrders
     }
   },
   computed: {
@@ -55,27 +55,33 @@ export default Vue.component('sortable-table', {
       let sortKey = this.sortKey
       let filterKey = this.filterKey && this.filterKey.toLowerCase()
       let order = this.sortOrders[sortKey] || 1
-      let data = this.datas
+      let datas = this.datas
 
       if (filterKey) {
-        data = data.filter(function (row) {
+        datas = datas.filter(function (row) {
           return Object.keys(row).some(function (key) {
             return String(row[key]).toLowerCase().indexOf(filterKey) > -1
           })
         })
       }
       if (sortKey) {
-        data = data.slice().sort(function (a, b) {
+        datas = datas.slice().sort(function (a, b) {
           a = a[sortKey]
           b = b[sortKey]
           return (a === b ? 0 : a > b ? 1 : -1) * order
         })
       }
 
-      return data
+      return datas
     }
   },
   methods: {
+    redirectToShop(shopId) {
+      this.$root.$router.push({name: 'shop', params: {id: shopId}})
+    },
+    getImageSrc(itemId) {
+        return helpers.getImageItem(itemId);
+    },
     sortBy: function (key) {
       this.sortKey = key
       this.sortOrders[key] = this.sortOrders[key] * -1
