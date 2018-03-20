@@ -18,8 +18,16 @@ const getters = {
 };
 
 const actions = {
-  async getShop({ commit }, data) {
-    commit("getShop", await DaroApi.getShop(data.id));
+  async getShop({ commit, dispatch }, data) {
+    try {
+      const response = await startLoading(dispatch, 'load shop by shops', () => {
+        return DaroApi.getShop(data.id)
+      })
+
+      commit("getShop", response);
+    } catch (e) {
+      endLoading(dispatch, 'load shop by shops')
+    }
   },
   async getShopsByItem({ commit, dispatch }, data) {
     try {
@@ -32,11 +40,16 @@ const actions = {
       endLoading(dispatch, 'load items by shop')
     }
 
-    //commit("getShopsByItem", await DaroApi.getShopsByItems(data.searchTerm));
-
   },
-  async allShops({ commit }) {
-    commit("allShops", await DaroApi.allShops());
+  async allShops({ commit, dispatch }) {
+    try {
+      const response = await startLoading(dispatch, 'load all by shops', () => {
+        return DaroApi.allShops()
+      })
+      commit("allShops", response);
+    } catch (e) {
+      endLoading(dispatch, 'load all by shops')
+    }
   }
 };
 
