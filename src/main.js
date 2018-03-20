@@ -1,8 +1,10 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from "vue"
+import Vuex from "vuex"
 import VueResource from "vue-resource"
 import VueClipboard from "vue-clipboard2"
+import VueLoading from 'vuex-loading'
 import { sync } from 'vuex-router-sync'
 import App from "./App"
 import router from "./router"
@@ -18,6 +20,8 @@ Object.keys(filters).forEach(key => {
 
 Vue.use(VueResource)
 Vue.use(VueClipboard)
+Vue.use(Vuex)
+Vue.use(VueLoading)
 
 sync(store, router)
 
@@ -31,5 +35,6 @@ const app = new Vue({
   router,
   store,
   components: { App },
-  template: "<App/>"
+  template: "<App/>",
+  vueLoading: new VueLoading({useVuex: true}),
 })

@@ -7,24 +7,34 @@
             <input name="query" v-model="tableSearchTerm">
         </form>
 
-        <sortable-table
-            v-if="items.length > 0"
-            :datas="items"
-            :columns="listColumns"
-            :filter-key="tableSearchTerm" />
+        <v-loading loader='load items by shop'>
+            <template slot='spinner'>
+                <v-loading-spinner height='60px' width='60px' />
+            </template>
+
+            <sortable-table
+                v-if="items.length > 0"
+                :datas="items"
+                :columns="listColumns"
+                :filter-key="tableSearchTerm" />
+        </v-loading>
 
     </layout-main>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import vLoading from 'vuex-loading/src/v-loading.vue'
+import vLoadingSpinner from 'vuex-loading/src/spinners/spinner.vue'
 import LayoutMain from '@/components/layouts/main'
 import SortableTable from '@/components/ui/SortableTable'
 
 export default {
     components: {
         LayoutMain,
-        SortableTable
+        SortableTable,
+        vLoading,
+        vLoadingSpinner
     },
     data() {
         return {
