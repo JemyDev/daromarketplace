@@ -15,7 +15,8 @@
             <sortable-table
                 :datas="items"
                 :columns="listColumns"
-                :filter-key="tableSearchTerm" />
+                :filter-key="tableSearchTerm"
+                @onRowClick="redirectToShop" />
         </v-loading>
       </div>
     </div>
@@ -61,6 +62,9 @@ export default {
     ]),
     search(searchTerm) {
       this.$router.push({name: 'shops', query: {searchTerm: searchTerm} })
+    },
+    redirectToShop(shopId) {
+        this.$root.$router.push({name: 'shop', params: {id: shopId}})
     }
   }
 }
