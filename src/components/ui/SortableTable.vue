@@ -13,11 +13,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(entry, index) in filteredData" :key="index" @click="onSingleRowClick(entry)">
+      <tr v-for="(entry, index) in filteredData" :key="index" @click="onSingleRowClick(entry)" class="pointer">
         <td v-for="(obj, index) in columns" :key="index"
           :class="{ 'text-right': obj.align === 'right' }">
           {{entry[obj.name]}}
-          <!-- {{dynamicFilters(entry[obj.key], obj.filters)}}   -->
+          {{dynamicFilters(entry[obj.key], obj.filters)}}
         </td>
       </tr>
     </tbody>
@@ -86,18 +86,25 @@ export default Vue.component('sortable-table', {
     sortBy: function (key) {
       this.sortKey = key
       this.sortOrders[key] = this.sortOrders[key] * -1
-    }/* ,
+    },
     dynamicFilters: function (value, filters) {
       if (!filters)
         return value;
 
       value = filters.map((filter) => {
-        return Vue.filter(filter)(value)
+        console.log(this.$root.$options.filters);
+        return Vue.filter(filter, this.$root.$options.filters)
       })
 
       return value;
-    } */
+    }
   }
 })
 
 </script>
+
+<style>
+  .pointer {
+      cursor: pointer;
+  }
+</style>

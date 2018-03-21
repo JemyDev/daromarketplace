@@ -43,7 +43,7 @@ export default {
             listColumns: [
                 {name: 'name',   label: 'Nom objet', filters: ['formatItemName']},
                 {name: 'prix',   label: 'Prix', align: 'right', filters: ['formatCurrency']},
-                {name: 'refine', label: 'Reffinage'},
+                {name: 'refine', label: 'Refine'},
                 {name: 'title',  label: 'Vendeur'},
                 {name: 'map',    label: 'Emplacement'}
             ]
@@ -68,9 +68,3 @@ export default {
     }
 }
 </script>
-
-<style>
-.pointer {
-    cursor: pointer;
-}
-</style>
