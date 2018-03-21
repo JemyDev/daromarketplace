@@ -5,7 +5,7 @@
         <form id="search" class="form-inline">
             <div class="form-group">
                 <div class="input-group">
-                    <label>Rechercher dans ce tableau :</label>
+                    <label>Rechercher dans la liste : </label>
                     <input class="form-control mr-sm-2" name="query" v-model="tableSearchTerm">
                 </div>
             </div>
@@ -49,7 +49,7 @@ export default {
                 {name: 'prix',   label: 'Prix', align: 'right', filters: ['formatCurrency']},
                 {name: 'refine', label: 'Refine'},
                 {name: 'title',  label: 'Vendeur'},
-                {name: 'map',    label: 'Emplacement', filters: ['uppercase']}
+                {name: 'map',    label: 'Emplacement', filters: ['capitalize']}
             ]
         }
     },
