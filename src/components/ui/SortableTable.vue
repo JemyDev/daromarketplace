@@ -80,7 +80,7 @@ export default Vue.component('sortable-table', {
   },
   methods: {
     onSingleRowClick(data) {
-      this.onRowClick(data.id);
+      this.$emit('onRowClick', data.id);
     },
     getImageSrc(itemId) {
         return helpers.getImageItem(itemId);

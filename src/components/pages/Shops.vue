@@ -16,7 +16,7 @@
                 :datas="items"
                 :columns="listColumns"
                 :filter-key="tableSearchTerm"
-                :on-row-click="redirectToShop" />
+                @onRowClick="redirectToShop" />
         </v-loading>
 
     </layout-main>
