@@ -13,11 +13,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(entry, index) in filteredData" :key="index" @click="onRowClick(entry)">
+      <tr v-for="(entry, index) in filteredData" :key="index" @click="onBodyRowClick(entry)">
         <td v-for="(obj, index) in columns" :key="index"
           :class="{ 'text-right': obj.align === 'right' }">
-          <!-- {{entry[obj.name]}} -->
-          {{dynamicFilters(entry[obj.name], obj.filters)}}
+          {{obj.filters ? dynamicFilters(entry[obj.name], obj.filters) : entry[obj.name]}}
         </td>
       </tr>
     </tbody>
@@ -77,7 +76,7 @@ export default Vue.component('sortable-table', {
     }
   },
   methods: {
-    onRowClick(data) {
+    onBodyRowClick(data) {
       this.$emit('onRowClick', data.id);
     },
     getImageSrc(itemId) {
@@ -88,14 +87,15 @@ export default Vue.component('sortable-table', {
       this.sortOrders[key] = this.sortOrders[key] * -1
     },
     dynamicFilters(value, filters) {
-      if (!filters)
-        return value;
-
-      value = filters.map((filter) => {
-        return this.$root.$options.filters[filter](value)
+      let filteredVal = filters.map((filter) => {
+        if (this.$root.$options.filters[filter] instanceof Function) {
+          return this.$root.$options.filters[filter](value)
+        } else {
+          return value
+        }
       })
 
-      return value.toString();
+      return filteredVal.toString();
     }
   }
 })

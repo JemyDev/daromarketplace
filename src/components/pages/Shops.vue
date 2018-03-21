@@ -11,13 +11,13 @@
             <template slot='spinner'>
                 <v-loading-spinner height='60px' width='60px' />
             </template>
-
             <sortable-table
                 :datas="items"
                 :columns="listColumns"
                 :filter-key="tableSearchTerm"
                 @onRowClick="redirectToShop" />
         </v-loading>
+
 
     </layout-main>
 </template>
@@ -45,7 +45,7 @@ export default {
                 {name: 'prix',   label: 'Prix', align: 'right', filters: ['formatCurrency']},
                 {name: 'refine', label: 'Reffinage'},
                 {name: 'title',  label: 'Vendeur'},
-                {name: 'map',    label: 'Emplacement'}
+                {name: 'map',    label: 'Emplacement', filters: ['uppercase']}
             ]
         }
     },
