@@ -2,7 +2,7 @@
   <form @submit.prevent="search" id="form-buscar">
     <div class="form-group">
       <div class="input-group">
-        <input type="search" name="searchBar" class="form-control" :class="cls" :placeholder="placeholder" v-model="searchTerm" />
+        <input type="search" name="searchBar" class="form-control" :class="cls" :placeholder="placeholder" v-model="searchTerm" :autofocus="autofocus" />
         <span class="input-group-btn">
           <button class="btn btn-success" type="submit">
             <i class="fa fa-search"></i> Rechercher
@@ -30,7 +30,8 @@ let SearchBar = Vue.component('search-bar', {
    cls: {
      type: Array,
      default: () => { return [] }
-   }
+   },
+   autofocus : Boolean
  },
  methods: {
     search() {

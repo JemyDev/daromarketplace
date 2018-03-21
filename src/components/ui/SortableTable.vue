@@ -13,11 +13,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(entry, index) in filteredData" :key="index" @click="onRowClick(entry)" class="pointer">
+      <tr v-for="(entry, index) in filteredData" :key="index" @click="onBodyRowClick(entry)" class="pointer">
         <td v-for="(obj, index) in columns" :key="index"
           :class="{ 'text-right': obj.align === 'right' }">
-          <!-- {{entry[obj.name]}} -->
-          {{dynamicFilters(entry[obj.name], obj.filters)}}
+          <img :src="getImageSrc(entry.item_id)" alt="" v-if="obj.name === 'name'" width="48">
+
+          {{obj.filters ? dynamicFilters(entry[obj.name], obj.filters) : entry[obj.name]}}
+
+          <copy-clipboard-button :message="getShopLocationCommand(entry.map, entry.x, entry.y)" v-if="obj.name === 'map'">Copy command</copy-clipboard-button>
         </td>
       </tr>
     </tbody>
@@ -31,12 +34,16 @@
 <script>
 import Vue from 'Vue'
 import helpers from '@/helpers/helpers'
+import CopyClipboardButton from '@/components/ui/CopyClipboardButton.vue'
 
 export default Vue.component('sortable-table', {
   props: {
     datas: { default: () => [], type: [Array, Object, String] },
     columns: Array,
     filterKey: String
+  },
+  components: {
+    CopyClipboardButton
   },
   data () {
     let sortOrders = {}
@@ -77,25 +84,31 @@ export default Vue.component('sortable-table', {
     }
   },
   methods: {
-    onRowClick(data) {
+    onBodyRowClick(data) {
       this.$emit('onRowClick', data.id);
     },
     getImageSrc(itemId) {
-        return helpers.getImageItem(itemId);
+      if (!itemId) return
+
+      return helpers.getImageItem(itemId);
+    },
+    getShopLocationCommand(map, x, y) {
+      return `/nav ${map} ${x}/${y}`
     },
     sortBy(key) {
       this.sortKey = key
       this.sortOrders[key] = this.sortOrders[key] * -1
     },
     dynamicFilters(value, filters) {
-      if (!filters)
-        return value;
-
-      value = filters.map((filter) => {
-        return this.$root.$options.filters[filter](value)
+      let filteredVal = filters.map((filter) => {
+        if (this.$root.$options.filters[filter] instanceof Function) {
+          return this.$root.$options.filters[filter](value)
+        } else {
+          return value
+        }
       })
 
-      return value.toString();
+      return filteredVal.toString();
     }
   }
 })
