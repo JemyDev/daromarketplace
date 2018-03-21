@@ -16,7 +16,11 @@
       <tr v-for="(entry, index) in filteredData" :key="index" @click="onBodyRowClick(entry)" class="pointer">
         <td v-for="(obj, index) in columns" :key="index"
           :class="{ 'text-right': obj.align === 'right' }">
+          <img :src="getImageSrc(entry.item_id)" alt="" v-if="obj.name === 'name'" width="48">
+
           {{obj.filters ? dynamicFilters(entry[obj.name], obj.filters) : entry[obj.name]}}
+
+          <copy-clipboard-button :message="getShopLocationCommand(entry.map, entry.x, entry.y)" v-if="obj.name === 'map'">Copy command</copy-clipboard-button>
         </td>
       </tr>
     </tbody>
@@ -30,12 +34,16 @@
 <script>
 import Vue from 'Vue'
 import helpers from '@/helpers/helpers'
+import CopyClipboardButton from '@/components/ui/CopyClipboardButton.vue'
 
 export default Vue.component('sortable-table', {
   props: {
     datas: { default: () => [], type: [Array, Object, String] },
     columns: Array,
     filterKey: String
+  },
+  components: {
+    CopyClipboardButton
   },
   data () {
     let sortOrders = {}
@@ -80,7 +88,12 @@ export default Vue.component('sortable-table', {
       this.$emit('onRowClick', data.id);
     },
     getImageSrc(itemId) {
-        return helpers.getImageItem(itemId);
+      if (!itemId) return
+
+      return helpers.getImageItem(itemId);
+    },
+    getShopLocationCommand(map, x, y) {
+      return `/nav ${map} ${x}/${y}`
     },
     sortBy(key) {
       this.sortKey = key
