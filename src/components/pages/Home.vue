@@ -6,7 +6,7 @@
             <h1>{{ $appName }}</h1>
             <p>Retrouvez tous les shops du serveur Ragnarok DARO !</p>
           </div>
-        <search-bar v-model="searchTerm" @search="search" />
+        <search-bar v-model="searchTerm" @search="search" autofocus />
         <v-loading loader='load all by shops'>
             <template slot='spinner'>
                 <v-loading-spinner height='60px' width='60px' />
