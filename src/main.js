@@ -37,4 +37,5 @@ const app = new Vue({
   components: { App },
   template: "<App/>",
   vueLoading: new VueLoading({useVuex: true}),
+  filters: filters
 })
