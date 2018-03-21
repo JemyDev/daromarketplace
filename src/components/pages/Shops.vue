@@ -2,9 +2,13 @@
     <layout-main>
         <h2>Résultat(s) pour la recherche : {{searchTerm}}</h2>
 
-        <form id="search">
-            <span>Rechercher dans ce tableau :</span>
-            <input name="query" v-model="tableSearchTerm">
+        <form id="search" class="form-inline">
+            <div class="form-group">
+                <div class="input-group">
+                    <label>Rechercher dans ce tableau :</label>
+                    <input class="form-control mr-sm-2" name="query" v-model="tableSearchTerm">
+                </div>
+            </div>
         </form>
 
         <v-loading loader='load items by shop'>

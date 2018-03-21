@@ -5,7 +5,7 @@
       <tr>
         <th v-for="(obj, index) in columns" :key="index"
           @click="sortBy(obj.name)"
-          :class="{ active: sortKey == obj.name, 'text-right': obj.align === 'right' }">
+          :class="{ active: sortKey == obj.name, 'text-right': obj.align === 'right' }" class="pointer">
           {{ obj.label }}
           <span class="arrow" :class="sortOrders[obj.name] > 0 ? 'asc' : 'dsc'">
           </span>
