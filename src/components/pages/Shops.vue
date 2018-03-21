@@ -53,9 +53,9 @@ export default {
             ]
         }
     },
-    computed: mapGetters({
+    computed: {...mapGetters({
         items: 'shopsByItem'
-    }),
+    })},
     methods: {
         redirectToShop(shopId) {
             this.$root.$router.push({name: 'shop', params: {id: shopId}})
