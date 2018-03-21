@@ -17,7 +17,7 @@
         <td v-for="(obj, index) in columns" :key="index"
           :class="{ 'text-right': obj.align === 'right' }">
           {{entry[obj.name]}}
-          <!-- {{dynamicFilters(entry[obj.key], obj.filters)}}   -->
+          <!-- {{dynamicFilters(entry[obj.name], obj.filters)}} -->
         </td>
       </tr>
     </tbody>
@@ -53,6 +53,7 @@ export default Vue.component('sortable-table', {
   },
   computed: {
     filteredData () {
+      console.log(this)
       let sortKey = this.sortKey
       let filterKey = this.filterKey && this.filterKey.toLowerCase()
       let order = this.sortOrders[sortKey] || 1
@@ -65,6 +66,7 @@ export default Vue.component('sortable-table', {
           })
         })
       }
+
       if (sortKey) {
         datas = datas.slice().sort(function (a, b) {
           a = a[sortKey]
@@ -83,20 +85,27 @@ export default Vue.component('sortable-table', {
     getImageSrc(itemId) {
         return helpers.getImageItem(itemId);
     },
-    sortBy: function (key) {
+    sortBy(key) {
       this.sortKey = key
       this.sortOrders[key] = this.sortOrders[key] * -1
-    }/* ,
-    dynamicFilters: function (value, filters) {
+    },
+    dynamicFilters(value, filters) {
       if (!filters)
         return value;
 
-      value = filters.map((filter) => {
-        return Vue.filter(filter)(value)
-      })
+        console.log(this)
+
+        //console.log(this.$options.filters.capitalize('jajaja'))
+
+      /* value = filters.map((filters) => {
+        console.log(filters)
+        return filter
+      }) */
+
+
 
       return value;
-    } */
+    }
   }
 })
 
