@@ -5,7 +5,7 @@
       <tr>
         <th v-for="(obj, index) in columns" :key="index"
           @click="sortBy(obj.name)"
-          :class="{ active: sortKey == obj.name, 'text-right': obj.align === 'right' }">
+          :class="{ active: sortKey == obj.name, 'text-right': obj.align === 'right' }" class="pointer">
           {{ obj.label }}
           <span class="arrow" :class="sortOrders[obj.name] > 0 ? 'asc' : 'dsc'">
           </span>
@@ -13,7 +13,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(entry, index) in filteredData" :key="index" @click="onBodyRowClick(entry)">
+      <tr v-for="(entry, index) in filteredData" :key="index" @click="onBodyRowClick(entry)" class="pointer">
         <td v-for="(obj, index) in columns" :key="index"
           :class="{ 'text-right': obj.align === 'right' }">
           {{obj.filters ? dynamicFilters(entry[obj.name], obj.filters) : entry[obj.name]}}
@@ -101,3 +101,9 @@ export default Vue.component('sortable-table', {
 })
 
 </script>
+
+<style>
+  .pointer {
+      cursor: pointer;
+  }
+</style>

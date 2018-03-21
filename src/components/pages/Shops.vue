@@ -2,9 +2,13 @@
     <layout-main>
         <h2>Résultat(s) pour la recherche : {{searchTerm}}</h2>
 
-        <form id="search">
-            <span>Rechercher dans ce tableau :</span>
-            <input name="query" v-model="tableSearchTerm">
+        <form id="search" class="form-inline">
+            <div class="form-group">
+                <div class="input-group">
+                    <label>Rechercher dans ce tableau :</label>
+                    <input class="form-control mr-sm-2" name="query" v-model="tableSearchTerm">
+                </div>
+            </div>
         </form>
 
         <v-loading loader='load items by shop'>
@@ -43,7 +47,7 @@ export default {
             listColumns: [
                 {name: 'name',   label: 'Nom objet', filters: ['formatItemName']},
                 {name: 'prix',   label: 'Prix', align: 'right', filters: ['formatCurrency']},
-                {name: 'refine', label: 'Reffinage'},
+                {name: 'refine', label: 'Refine'},
                 {name: 'title',  label: 'Vendeur'},
                 {name: 'map',    label: 'Emplacement', filters: ['uppercase']}
             ]
@@ -68,9 +72,3 @@ export default {
     }
 }
 </script>
-
-<style>
-.pointer {
-    cursor: pointer;
-}
-</style>
