@@ -13,11 +13,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(entry, index) in filteredData" :key="index" @click="onSingleRowClick(entry)" class="pointer">
+      <tr v-for="(entry, index) in filteredData" :key="index" @click="onRowClick(entry)" class="pointer">
         <td v-for="(obj, index) in columns" :key="index"
           :class="{ 'text-right': obj.align === 'right' }">
-          {{entry[obj.name]}}
-          {{dynamicFilters(entry[obj.key], obj.filters)}}
+          <!-- {{entry[obj.name]}} -->
+          {{dynamicFilters(entry[obj.name], obj.filters)}}
         </td>
       </tr>
     </tbody>
@@ -36,8 +36,7 @@ export default Vue.component('sortable-table', {
   props: {
     datas: { default: () => [], type: [Array, Object, String] },
     columns: Array,
-    filterKey: String,
-    onRowClick: Function
+    filterKey: String
   },
   data () {
     let sortOrders = {}
@@ -65,6 +64,7 @@ export default Vue.component('sortable-table', {
           })
         })
       }
+
       if (sortKey) {
         datas = datas.slice().sort(function (a, b) {
           a = a[sortKey]
@@ -77,26 +77,25 @@ export default Vue.component('sortable-table', {
     }
   },
   methods: {
-    onSingleRowClick(data) {
+    onRowClick(data) {
       this.$emit('onRowClick', data.id);
     },
     getImageSrc(itemId) {
         return helpers.getImageItem(itemId);
     },
-    sortBy: function (key) {
+    sortBy(key) {
       this.sortKey = key
       this.sortOrders[key] = this.sortOrders[key] * -1
     },
-    dynamicFilters: function (value, filters) {
+    dynamicFilters(value, filters) {
       if (!filters)
         return value;
 
       value = filters.map((filter) => {
-        console.log(this.$root.$options.filters);
-        return Vue.filter(filter, this.$root.$options.filters)
+        return this.$root.$options.filters[filter](value)
       })
 
-      return value;
+      return value.toString();
     }
   }
 })
