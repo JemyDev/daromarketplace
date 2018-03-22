@@ -1,5 +1,14 @@
  <template>
  <div class="table-wrapper">
+   <form class="form-inline" v-if="hasSearch">
+        <div class="form-group">
+            <div class="input-group">
+                <label>Rechercher dans la liste : </label>
+                <input class="form-control mr-sm-2" name="query" v-model="filterKey">
+            </div>
+        </div>
+    </form>
+
    <table class="table">
     <thead>
       <tr>
@@ -18,9 +27,11 @@
           :class="{ 'text-right': obj.align === 'right' }">
           <img :src="getImageSrc(entry.item_id)" alt="" v-if="obj.name === 'name'" width="48">
 
-          {{obj.filters ? dynamicFilters(entry[obj.name], obj.filters) : entry[obj.name]}}
+          <!-- {{obj.filters ? dynamicFilters(entry[obj.name], obj.filters) : entry[obj.name]}} -->
 
-          <copy-clipboard-button :message="getShopLocationCommand(entry.map, entry.x, entry.y)" v-if="obj.name === 'map'">Copy command</copy-clipboard-button>
+          {{entry[obj.name]}}
+
+          <!-- <copy-clipboard-button :message="getShopLocationCommand(entry.map, entry.x, entry.y)" v-if="obj.name === 'map'">Copy command</copy-clipboard-button> -->
         </td>
       </tr>
     </tbody>
@@ -34,17 +45,17 @@
 <script>
 import Vue from 'Vue'
 import helpers from '@/helpers/helpers'
-import CopyClipboardButton from '@/components/ui/CopyClipboardButton.vue'
+//import CopyClipboardButton from '@/components/ui/CopyClipboardButton.vue'
 
 export default Vue.component('sortable-table', {
   props: {
     datas: { default: () => [], type: [Array, Object, String] },
     columns: Array,
-    filterKey: String
+    hasSearch: Boolean
   },
-  components: {
+  /* components: {
     CopyClipboardButton
-  },
+  }, */
   data () {
     let sortOrders = {}
 
@@ -54,15 +65,39 @@ export default Vue.component('sortable-table', {
 
     return {
       sortKey: '',
-      sortOrders: sortOrders
+      sortOrders: sortOrders,
+      filterKey: null
     }
   },
   computed: {
-    filteredData () {
+    localFilterDatas() {
+      let filteredDatas = JSON.parse(JSON.stringify(this.datas))
+      filteredDatas.map((item, index) => {
+        for (let key in item) {
+          if (!item.hasOwnProperty(key)) continue
+
+          this.columns.map(column => {
+            if (column.name !== key || !column.filters)
+              return
+
+            column.filters.map((filter) => {
+              if (this.$root.$options.filters[filter] instanceof Function) {
+                filteredDatas[index][key] = this.$root.$options.filters[filter](item[key])
+              } else {
+                filteredDatas[index][key] = item[key]
+              }
+            })
+          })
+        }
+      })
+
+      return filteredDatas;
+    },
+    filteredData() {
       let sortKey = this.sortKey
       let filterKey = this.filterKey && this.filterKey.toLowerCase()
       let order = this.sortOrders[sortKey] || 1
-      let datas = this.datas
+      let datas = this.localFilterDatas
 
       if (filterKey) {
         datas = datas.filter(function (row) {
@@ -98,17 +133,6 @@ export default Vue.component('sortable-table', {
     sortBy(key) {
       this.sortKey = key
       this.sortOrders[key] = this.sortOrders[key] * -1
-    },
-    dynamicFilters(value, filters) {
-      let filteredVal = filters.map((filter) => {
-        if (this.$root.$options.filters[filter] instanceof Function) {
-          return this.$root.$options.filters[filter](value)
-        } else {
-          return value
-        }
-      })
-
-      return filteredVal.toString();
     }
   }
 })

@@ -2,66 +2,68 @@
     <layout-main>
         <h2>Résultat(s) pour la recherche : {{searchTerm}}</h2>
 
-        <form id="search" class="form-inline">
-            <div class="form-group">
-                <div class="input-group">
-                    <label>Rechercher dans la liste : </label>
-                    <input class="form-control mr-sm-2" name="query" v-model="tableSearchTerm">
-                </div>
+        <div v-if="shops.list.length > 0">
+            <div v-if="shops.isLoading">
+            <p>Loading...</p>
             </div>
-        </form>
-
-        <v-loading loader='load items by shop'>
-            <template slot='spinner'>
-                <v-loading-spinner height='60px' width='60px' />
-            </template>
+            <div v-else>
             <sortable-table
-                :datas="items"
+                :datas="localShopsList"
                 :columns="listColumns"
-                :filter-key="tableSearchTerm"
+                has-search
                 @onRowClick="redirectToShop" />
-        </v-loading>
-
+            </div>
+        </div>
+        <div v-else>
+            <div class="alert alert-danger" role="alert">
+                <p>Aucun résultat !</p>
+            </div>
+        </div>
 
     </layout-main>
 </template>
 
 <script>
+import helpers from '@/helpers/helpers'
 import { mapGetters } from 'vuex'
-import vLoading from 'vuex-loading/src/v-loading.vue'
-import vLoadingSpinner from 'vuex-loading/src/spinners/spinner.vue'
 import LayoutMain from '@/components/layouts/main'
 import SortableTable from '@/components/ui/SortableTable'
 
 export default {
     components: {
         LayoutMain,
-        SortableTable,
-        vLoading,
-        vLoadingSpinner
+        SortableTable
     },
     data() {
         return {
             searchTerm: this.$route.query.searchTerm,
             tableSearchTerm: null,
             listColumns: [
-                {name: 'name',   label: 'Nom objet', filters: ['formatItemName']},
-                {name: 'prix',   label: 'Prix', align: 'right', filters: ['formatCurrency']},
-                {name: 'refine', label: 'Refine'},
-                {name: 'title',  label: 'Vendeur'},
-                {name: 'map',    label: 'Emplacement', filters: ['capitalize']}
+                {key: 'name',   title: 'Nom objet', filters: ['formatItemName']},
+                {key: 'prix',   title: 'Prix', align: 'right', filters: ['formatCurrency']},
+                {key: 'refine', title: 'Reffinage'},
+                {key: 'title',  title: 'Vendeur'},
+                {key: 'map',    title: 'Emplacement'}
             ]
         }
     },
-    computed: {...mapGetters({
-        items: 'shopsByItem'
-    })},
-    methods: {
-        redirectToShop(shopId) {
-            this.$root.$router.push({name: 'shop', params: {id: shopId}})
+    computed: {
+        ...mapGetters({
+            shops: 'allShops'
+        }),
+        localShopsList() {
+            return this.shops.list
         }
     },
-    created() {
+    methods: {
+        redirectToShop(shopId) {
+            this.$router.push({name: 'shop', params: {id: shopId}})
+        },
+        getImageSrc(itemId) {
+            return helpers.getImageItem(itemId);
+        }
+    },
+    created () {
         this.$store.dispatch('getShopsByItem', {searchTerm : this.searchTerm})
     },
     updated() {
@@ -72,3 +74,9 @@ export default {
     }
 }
 </script>
+
+<style>
+.pointer {
+    cursor: pointer;
+}
+</style>
