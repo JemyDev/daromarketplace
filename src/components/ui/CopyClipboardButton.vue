@@ -1,13 +1,16 @@
 <template>
   <button type="button"
-      v-clipboard="message"
-      @success="onCopy">
+      v-clipboard:copy="message"
+      v-clipboard:success="onCopy">
         <slot></slot>
       </button>
 </template>
 
 <script>
-export default {
+
+import Vue from 'Vue'
+
+export default Vue.component('copy-clipboard-button', {
   props: {
     message: String
   },
@@ -15,9 +18,8 @@ export default {
     onCopy: function (e) {
       e.stopPropagation();
       alert('You just copied: ' + e.text)
-
     }
   }
-}
+})
 </script>
 

@@ -3,7 +3,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import VueResource from "vue-resource";
-import VueClipboards from "vue-clipboards";
+import VueClipboard from "vue-clipboard2";
 import VueLoading from "vuex-loading";
 import { sync } from "vuex-router-sync";
 import App from "./App";
@@ -21,7 +21,7 @@ Object.keys(filters).forEach(key => {
 Vue.use(VueResource);
 Vue.use(Vuex);
 Vue.use(VueLoading);
-Vue.use(VueClipboards);
+Vue.use(VueClipboard);
 
 sync(store, router);
 
