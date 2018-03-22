@@ -26,8 +26,6 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import vLoading from 'vuex-loading/src/v-loading.vue'
-import vLoadingSpinner from 'vuex-loading/src/spinners/spinner.vue'
 import LayoutMain from '@/components/layouts/main'
 import SearchBar from '@/components/ui/SearchBar'
 import SortableTable from '@/components/ui/SortableTable'
@@ -36,8 +34,6 @@ export default {
   components: {
     LayoutMain,
     SortableTable,
-    vLoading,
-    vLoadingSpinner
   },
   data() {
     return {

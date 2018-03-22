@@ -7,9 +7,17 @@
                         <p>Loading...</p>
                     </div>
                     <div v-else>
-                        <h1>Nom du shop - <small class="text-muted">{{ shop.data.shopInfo.title }}</small></h1>
-                        <h2>Localisation - <small class="text-muted">{{ shop.data.shopInfo.map }} {{ shop.data.shopInfo.x }}/{{ shop.data.shopInfo.y }}</small></h2>
-                        <h3>Liste des items</h3>
+                        <div class="d-flex justify-content-between my-5">
+                            <div>
+                                <h1>Nom du shop - <small class="text-muted">{{ shop.data.shopInfo.title }}</small></h1>
+                                <h2>Localisation - <small class="text-muted">{{ shop.data.shopInfo.map }} {{ shop.data.shopInfo.x }}/{{ shop.data.shopInfo.y }}</small></h2>
+                                <h3>Liste des items</h3>
+                            </div>
+                            <div>
+                                <!--<img :src="" :alt="" :width="map.width" :height="map.height" />-->
+                            </div>
+                        </div>
+                        
                         <sortable-table
                             v-if="shop.data.items.length > 0"
                             :datas="shop.data.items"
@@ -27,17 +35,14 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import vLoading from 'vuex-loading/src/v-loading.vue'
-import vLoadingSpinner from 'vuex-loading/src/spinners/spinner.vue'
+import helpers from '@/helpers/helpers'
 import LayoutMain from '@/components/layouts/main'
 import SortableTable from '@/components/ui/SortableTable'
 
 export default {
     components: {
         LayoutMain,
-        SortableTable,
-        vLoading,
-        vLoadingSpinner
+        SortableTable
     },
     data() {
         return {
@@ -45,7 +50,11 @@ export default {
             listColumns: [
                 {name: 'name', label: 'Objet', filters: ['formatItemName']},
                 {name: 'prix', label: 'Prix', filters: ['formatCurrency']}
-            ]
+            ],
+            map: {
+                width: 0,
+                height: 0
+            }
         }
     },
     computed: {
