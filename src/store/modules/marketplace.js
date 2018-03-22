@@ -1,48 +1,78 @@
-import DaroApi from "@/api/";
+import DaroApi from "@/api/"
 
-// initial state
 const state = {
-  shop: {},
-  shopsByItem: {},
-  allShops: {}
-};
+  shop: {
+    isLoading: false,
+    data: null
+  },
+  allShops: {
+    isLoading: false,
+    list: []
+  }
+}
 
-// getters
 const getters = {
   shop: state => state.shop,
-  shopsByItem: state => state.shopsByItem,
   allShops: state => state.allShops
-};
+}
 
-// actions
 const actions = {
-  async getShop({ commit }, data) {
-    commit("getShop", await DaroApi.getShop(data.id));
-  },
-  async getShopsByItem({ commit }, data) {
-    commit("getShopsByItem", await DaroApi.getShopsByItems(data.searchTerm));
-  },
-  async allShops({ commit }) {
-    commit("allShops");
-  }
-};
+  async getShop({ commit, dispatch }, id) {
+    try {
+      commit("setLoading", {type: 'shop'})
 
-// mutations
-const mutations = {
-  getShop(state, shop) {
-    state.shop = shop
+      const response = await DaroApi.getShopById(id)
+
+      commit("setShop", response)
+      commit("unsetLoading", {type: 'shop'})
+    } catch (e) {
+      commit("unsetLoading", {type: 'shop'})
+    }
   },
-  getShopsByItem(state, shops) {
-    state.shopsByItem = shops
+  async getShopsByItem({ commit, dispatch }, query) {
+    try {
+      commit("setLoading", {type: 'allShops'})
+
+      const response = await DaroApi.getShopsByItem(query)
+
+      commit("setAllShops", response)
+      commit("unsetLoading", {type: 'allShops'})
+    } catch (e) {
+      console.warn(e)
+      commit("unsetLoading", {type: 'allShops'})
+    }
   },
-  allShops(state, shops) {
-    state.shops = shops
+  async getAllShops({ commit, dispatch }) {
+    try {
+      commit("setLoading", {type: 'allShops'})
+      const response = await DaroApi.getAllShops()
+
+      commit("setAllShops", response)
+      commit("unsetLoading", {type: 'allShops'})
+    } catch (e) {
+      commit("unsetLoading", {type: 'allShops'})
+    }
   }
-};
+}
+
+const mutations = {
+  setShop(state, shop) {
+    state.shop.data = shop
+  },
+  setAllShops(state, shops) {
+    state.allShops.list = shops
+  },
+  setLoading(state, params) {
+    state[params.type].isLoading  = true
+  },
+  unsetLoading(state, params) {
+    state[params.type].isLoading  = false
+  }
+}
 
 export default {
   state,
   getters,
   actions,
   mutations
-};
+}

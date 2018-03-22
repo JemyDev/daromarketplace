@@ -1,9 +1,9 @@
 import Vue from "vue";
 
 export default {
-  async getShopsByItems(searchTerm) {
+  async getShopsByItem(item) {
     let response = await Vue.http
-      .get(`?m=shop&filtre=${searchTerm}`)
+      .get(`?m=shop&filtre=${item}`)
       .then(
         response => response.body,
         response => {
@@ -13,7 +13,7 @@ export default {
 
       return response;
   },
-  async getShop(id) {
+  async getShopById(id) {
     let response = await Vue.http.get(`?m=shopd&shopID=${id}`).then(
       response => response.body,
       response => {
@@ -23,7 +23,7 @@ export default {
 
     return response;
   },
-  async allShops() {
+  async getAllShops() {
     let response = await Vue.http.get('?m=shopList').then(
       response => response.body,
       response => {
