@@ -2,14 +2,23 @@
     <layout-main>
         <h2>Résultat(s) pour la recherche : {{searchTerm}}</h2>
 
-        <form id="search">
-            <span>Rechercher dans ce tableau :</span> <input name="query" v-model="tableSearchTerm">
-        </form>
-
-        <sortable-table
-            :data="items"
-            :columns="listColumns"
-            :filter-key="tableSearchTerm" />
+        <div v-if="shops.list.length > 0">
+            <div v-if="shops.isLoading">
+            <p>Loading...</p>
+            </div>
+            <div v-else>
+            <sortable-table
+                :datas="localShopsList"
+                :columns="listColumns"
+                has-search
+                @onRowClick="redirectToShop" />
+            </div>
+        </div>
+        <div v-else>
+            <div class="alert alert-danger" role="alert">
+                <p>Aucun résultat !</p>
+            </div>
+        </div>
 
     </layout-main>
 </template>
@@ -36,6 +45,14 @@ export default {
                 {key: 'title',  title: 'Vendeur'},
                 {key: 'map',    title: 'Emplacement'}
             ]
+        }
+    },
+    computed: {
+        ...mapGetters({
+            shops: 'allShops'
+        }),
+        localShopsList() {
+            return this.shops.list
         }
     },
     methods: {

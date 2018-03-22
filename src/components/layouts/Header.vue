@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import SearchBar from '@/components/ui/SearchBar'
 
 export default {
@@ -21,6 +22,9 @@ export default {
         }
     },
     methods: {
+        ...mapActions([
+            'getShopsByItem'
+        ]),
         search(searchTerm) {
             if (this.lastSearchTerm && this.lastSearchTerm === searchTerm)
                 return
@@ -30,7 +34,7 @@ export default {
             }
 
             if (this.$route.name === 'shops') {
-                this.$store.dispatch('getShopsByItem', { searchTerm })
+                this.getShopsByItem(searchTerm);
             } else {
                 routeQuery.name = 'shops'
             }
