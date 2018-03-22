@@ -11,23 +11,22 @@
             </div>
         </form>
 
-        <v-loading loader='load items by shop'>
-            <template slot='spinner'>
-                <v-loading-spinner height='60px' width='60px' />
-            </template>
-            <sortable-table
-                :datas="items"
-                :columns="listColumns"
-                :filter-key="tableSearchTerm"
-                @onRowClick="redirectToShop" />
-        </v-loading>
-
+        <div v-if="shops.isLoading">
+          <p>Loading...</p>
+        </div>
+        <div v-else>
+          <sortable-table
+            :datas="shops.list"
+            :columns="listColumns"
+            :filter-key="tableSearchTerm"
+            @onRowClick="redirectToShop" />
+        </div>
 
     </layout-main>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import vLoading from 'vuex-loading/src/v-loading.vue'
 import vLoadingSpinner from 'vuex-loading/src/spinners/spinner.vue'
 import LayoutMain from '@/components/layouts/main'
@@ -53,22 +52,25 @@ export default {
             ]
         }
     },
-    computed: mapGetters({
-        items: 'shopsByItem'
-    }),
+    computed: {
+        ...mapGetters({
+            shops: 'allShops'
+        })
+    },
     methods: {
+        ...mapActions([
+            'getShopsByItem'
+        ]),
         redirectToShop(shopId) {
             this.$root.$router.push({name: 'shop', params: {id: shopId}})
         }
     },
-    created() {
-        this.$store.dispatch('getShopsByItem', {searchTerm : this.searchTerm})
+    mounted() {
+        this.getShopsByItem(this.$route.query.searchTerm);
     },
     updated() {
         if (this.searchTerm !== this.$route.query.searchTerm)
             this.searchTerm = this.$route.query.searchTerm
-
-
     }
 }
 </script>

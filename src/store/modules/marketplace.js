@@ -1,76 +1,78 @@
 import DaroApi from "@/api/"
-import { createActionHelpers } from "vuex-loading"
-
-const { startLoading, endLoading } = createActionHelpers({
-  moduleName: "loading"
-});
 
 const state = {
-  shop: {},
-  shopsByItem: {},
-  allShops: {}
-};
+  shop: {
+    isLoading: false,
+    data: null
+  },
+  allShops: {
+    isLoading: false,
+    list: []
+  }
+}
 
 const getters = {
   shop: state => state.shop,
-  shopsByItem: state => state.shopsByItem,
   allShops: state => state.allShops
-};
+}
 
 const actions = {
-  async getShop({ commit, dispatch }, data) {
+  async getShop({ commit, dispatch }, id) {
     try {
-      const response = await startLoading(dispatch, "load shop by id", () => {
-        return DaroApi.getShop(data.id);
-      });
+      commit("setLoading", {type: 'shop'})
 
-      commit("getShop", response);
+      const response = await DaroApi.getShopById(id)
+
+      commit("setShop", response)
+      commit("unsetLoading", {type: 'shop'})
     } catch (e) {
-      endLoading(dispatch, "load shop by id");
+      commit("unsetLoading", {type: 'shop'})
     }
   },
-  async getShopsByItem({ commit, dispatch }, data) {
+  async getShopsByItem({ commit, dispatch }, query) {
     try {
-      const response = await startLoading(
-        dispatch,
-        "load items by shop",
-        () => {
-          return DaroApi.getShopsByItems(data.searchTerm);
-        }
-      );
+      commit("setLoading", {type: 'allShops'})
 
-      commit("getShopsByItem", response);
+      const response = await DaroApi.getShopsByItem(query)
+
+      commit("setAllShops", response)
+      commit("unsetLoading", {type: 'allShops'})
     } catch (e) {
-      endLoading(dispatch, "load items by shop");
+      console.warn(e)
+      commit("unsetLoading", {type: 'allShops'})
     }
   },
-  async allShops({ commit, dispatch }) {
+  async getAllShops({ commit, dispatch }) {
     try {
-      const response = await startLoading(dispatch, "load all shops", () => {
-        return DaroApi.allShops()
-      });
-      commit("allShops", response)
+      commit("setLoading", {type: 'allShops'})
+      const response = await DaroApi.getAllShops()
+
+      commit("setAllShops", response)
+      commit("unsetLoading", {type: 'allShops'})
     } catch (e) {
-      endLoading(dispatch, "load all shops")
+      commit("unsetLoading", {type: 'allShops'})
     }
   }
-};
+}
 
 const mutations = {
-  getShop(state, shop) {
-    state.shop = shop
+  setShop(state, shop) {
+    state.shop.data = shop
   },
-  getShopsByItem(state, shops) {
-    state.shopsByItem = shops
+  setAllShops(state, shops) {
+    state.allShops.list = shops
   },
-  allShops(state, shops) {
-    state.allShops = shops
+  setLoading(state, params) {
+    state[params.type].isLoading  = true
+  },
+  unsetLoading(state, params) {
+    state[params.type].isLoading  = false
   }
-};
+}
 
 export default {
   state,
   getters,
   actions,
   mutations
-};
+}

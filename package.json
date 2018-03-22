@@ -20,9 +20,9 @@
     "express": "^4.16.3",
     "vue": "^2.5.2",
     "vue-clipboard2": "0.1.0",
+    "vue-clipboards": "^1.2.4",
     "vue-router": "^3.0.1",
     "vue-types": "^1.2.2",
-    "vuex-loading": "^0.2.6",
     "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {

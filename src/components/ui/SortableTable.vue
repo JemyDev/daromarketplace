@@ -20,7 +20,7 @@
 
           {{obj.filters ? dynamicFilters(entry[obj.name], obj.filters) : entry[obj.name]}}
 
-          <copy-clipboard-button :message="getShopLocationCommand(entry.map, entry.x, entry.y)" v-if="obj.name === 'map'">Copy command</copy-clipboard-button>
+          <!-- <copy-clipboard-button :message="getShopLocationCommand(entry.map, entry.x, entry.y)" v-if="obj.name === 'map'">Copy command</copy-clipboard-button> -->
         </td>
       </tr>
     </tbody>
@@ -34,7 +34,7 @@
 <script>
 import Vue from 'Vue'
 import helpers from '@/helpers/helpers'
-import CopyClipboardButton from '@/components/ui/CopyClipboardButton.vue'
+//import CopyClipboardButton from '@/components/ui/CopyClipboardButton.vue'
 
 export default Vue.component('sortable-table', {
   props: {
@@ -42,9 +42,9 @@ export default Vue.component('sortable-table', {
     columns: Array,
     filterKey: String
   },
-  components: {
+  /* components: {
     CopyClipboardButton
-  },
+  }, */
   data () {
     let sortOrders = {}
 

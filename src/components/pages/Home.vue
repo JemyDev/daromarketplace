@@ -6,18 +6,19 @@
             <h1>{{ $appName }}</h1>
             <p>Retrouvez tous les shops du serveur Ragnarok DARO !</p>
           </div>
-        <search-bar v-model="searchTerm" @search="search" autofocus />
-        <v-loading loader='load all by shops'>
-            <template slot='spinner'>
-                <v-loading-spinner height='60px' width='60px' />
-            </template>
 
-            <sortable-table
-                :datas="items"
-                :columns="listColumns"
-                :filter-key="tableSearchTerm"
-                @onRowClick="redirectToShop" />
-        </v-loading>
+        <search-bar v-model="searchTerm" @search="search" autofocus />
+
+        <div v-if="shops.isLoading">
+          <p>Loading...</p>
+        </div>
+        <div v-else>
+          <sortable-table
+              :datas="shops.list"
+              :columns="listColumns"
+              @onRowClick="redirectToShop" />
+        </div>
+
       </div>
     </div>
   </layout-main>
@@ -38,34 +39,34 @@ export default {
     vLoading,
     vLoadingSpinner
   },
-  mounted: function() {
-    this.allShops();
-  },
   data() {
     return {
       searchTerm: '',
       tableSearchTerm: null,
       listColumns: [
-          {name: 'title',   label: 'Vendeur'},
-          {name: 'map',    label: 'Emplacement'}
+          {name: 'title', label: 'Vendeur'},
+          {name: 'map', label: 'Emplacement', filters: ['capitalize']}
       ]
     }
   },
   computed: {
-    items() {
-      return this.$store.state.marketplace.allShops;
-    }
+    ...mapGetters({
+      shops: 'allShops'
+    })
   },
   methods: {
     ...mapActions([
-      'allShops'
+      'getAllShops'
     ]),
     search(searchTerm) {
       this.$router.push({name: 'shops', query: {searchTerm: searchTerm} })
     },
     redirectToShop(shopId) {
-        this.$root.$router.push({name: 'shop', params: {id: shopId}})
+      this.$root.$router.push({name: 'shop', params: {id: shopId}})
     }
+  },
+  mounted: function() {
+    this.getAllShops();
   }
 }
 </script>
