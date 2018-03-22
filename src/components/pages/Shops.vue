@@ -2,24 +2,22 @@
     <layout-main>
         <h2>Résultat(s) pour la recherche : {{searchTerm}}</h2>
 
-        <form id="search" class="form-inline">
-            <div class="form-group">
-                <div class="input-group">
-                    <label>Rechercher dans la liste : </label>
-                    <input class="form-control mr-sm-2" name="query" v-model="tableSearchTerm">
-                </div>
+        <div v-if="shops.list.length > 0">
+            <div v-if="shops.isLoading">
+            <p>Loading...</p>
             </div>
-        </form>
-
-        <div v-if="shops.isLoading">
-          <p>Loading...</p>
+            <div v-else>
+            <sortable-table
+                :datas="localShopsList"
+                :columns="listColumns"
+                has-search
+                @onRowClick="redirectToShop" />
+            </div>
         </div>
         <div v-else>
-          <sortable-table
-            :datas="shops.list"
-            :columns="listColumns"
-            :filter-key="tableSearchTerm"
-            @onRowClick="redirectToShop" />
+            <div class="alert alert-danger" role="alert">
+                <p>Aucun résultat !</p>
+            </div>
         </div>
 
     </layout-main>
@@ -55,7 +53,10 @@ export default {
     computed: {
         ...mapGetters({
             shops: 'allShops'
-        })
+        }),
+        localShopsList() {
+            return this.shops.list
+        }
     },
     methods: {
         ...mapActions([
