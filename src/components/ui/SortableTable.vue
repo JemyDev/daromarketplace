@@ -27,8 +27,6 @@
           :class="{ 'text-right': obj.align === 'right' }">
           <img :src="getImageSrc(entry.item_id)" alt="" v-if="obj.name === 'name'" width="48">
 
-          <!-- {{obj.filters ? dynamicFilters(entry[obj.name], obj.filters) : entry[obj.name]}} -->
-
           {{entry[obj.name]}}
 
           <!-- <copy-clipboard-button :message="getShopLocationCommand(entry.map, entry.x, entry.y)" v-if="obj.name === 'map'">Copy command</copy-clipboard-button> -->
@@ -92,6 +90,8 @@ export default Vue.component('sortable-table', {
         }
       })
 
+      console.log(filteredDatas)
+
       return filteredDatas;
     },
     filteredData() {
@@ -115,6 +115,8 @@ export default Vue.component('sortable-table', {
           return (a === b ? 0 : a > b ? 1 : -1) * order
         })
       }
+
+      console.log(datas)
 
       return datas
     }

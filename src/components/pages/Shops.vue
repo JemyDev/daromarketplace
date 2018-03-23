@@ -4,14 +4,14 @@
 
         <div v-if="shops.list.length > 0">
             <div v-if="shops.isLoading">
-            <p>Loading...</p>
+                <p>Loading...</p>
             </div>
             <div v-else>
-            <sortable-table
-                :datas="localShopsList"
-                :columns="listColumns"
-                has-search
-                @onRowClick="redirectToShop" />
+                <sortable-table
+                    :datas="localShopsList"
+                    :columns="listColumns"
+                    has-search
+                    @onRowClick="redirectToShop" />
             </div>
         </div>
         <div v-else>
@@ -25,7 +25,7 @@
 
 <script>
 import helpers from '@/helpers/helpers'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import LayoutMain from '@/components/layouts/main'
 import SortableTable from '@/components/ui/SortableTable'
 
@@ -39,11 +39,11 @@ export default {
             searchTerm: this.$route.query.searchTerm,
             tableSearchTerm: null,
             listColumns: [
-                {key: 'name',   title: 'Nom objet', filters: ['formatItemName']},
-                {key: 'prix',   title: 'Prix', align: 'right', filters: ['formatCurrency']},
-                {key: 'refine', title: 'Reffinage'},
-                {key: 'title',  title: 'Vendeur'},
-                {key: 'map',    title: 'Emplacement'}
+                {name: 'name',   label: 'Nom objet', filters: ['formatItemName']},
+                {name: 'prix',   label: 'Prix', align: 'right', filters: ['formatCurrency']},
+                {name: 'refine', label: 'Reffinage'},
+                {name: 'title',  label: 'Vendeur'},
+                {name: 'map',    label: 'Emplacement'}
             ]
         }
     },
@@ -56,6 +56,9 @@ export default {
         }
     },
     methods: {
+        ...mapActions([
+            'getShopsByItem'
+        ]),
         redirectToShop(shopId) {
             this.$router.push({name: 'shop', params: {id: shopId}})
         },
@@ -64,7 +67,7 @@ export default {
         }
     },
     created () {
-        this.$store.dispatch('getShopsByItem', {searchTerm : this.searchTerm})
+        this.getShopsByItem(this.searchTerm)
     },
     updated() {
         if (this.searchTerm !== this.$route.query.searchTerm)
