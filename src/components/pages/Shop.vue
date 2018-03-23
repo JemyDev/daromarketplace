@@ -7,9 +7,21 @@
                         <p>Loading...</p>
                     </div>
                     <div v-else>
-                        <h1>Nom du shop - <small class="text-muted">{{ shop.data.shopInfo.title }}</small></h1>
-                        <h2>Localisation - <small class="text-muted">{{ shop.data.shopInfo.map }} {{ shop.data.shopInfo.x }}/{{ shop.data.shopInfo.y }}</small></h2>
-                        <h3>Liste des items</h3>
+                        <div class="d-flex justify-content-between my-5">
+                            <div>
+                                <h1>Nom du shop - <small class="text-muted">{{ shop.data.shopInfo.title }}</small></h1>
+                                <h2>Localisation - <small class="text-muted">{{ shop.data.shopInfo.map }} {{ shop.data.shopInfo.x }}/{{ shop.data.shopInfo.y }}</small></h2>
+                                <h3>Liste des items</h3>
+                            </div>
+                            <div>
+                                <map-canvas :map-name="shop.data.shopInfo.map" :coords="{ x: shop.data.shopInfo.x, y: shop.data.shopInfo.y }">
+                                    <map-image />
+                                    <map-shop-location />
+                                </map-canvas>
+                                <!--<img :src="" :alt="" :width="map.width" :height="map.height" />-->
+                            </div>
+                        </div>
+                        
                         <sortable-table
                             v-if="shop.data.items.length > 0"
                             :datas="shop.data.items"
@@ -27,17 +39,19 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import vLoading from 'vuex-loading/src/v-loading.vue'
-import vLoadingSpinner from 'vuex-loading/src/spinners/spinner.vue'
 import LayoutMain from '@/components/layouts/main'
 import SortableTable from '@/components/ui/SortableTable'
+import MapCanvas from '@/components/ui/MapCanvas'
+import MapImage from '@/components/ui/MapImage'
+import MapShopLocation from '@/components/ui/MapShopLocation'
 
 export default {
     components: {
         LayoutMain,
         SortableTable,
-        vLoading,
-        vLoadingSpinner
+        MapCanvas,
+        MapImage,
+        MapShopLocation
     },
     data() {
         return {
@@ -58,9 +72,6 @@ export default {
     },
     mounted() {
         this.getShop(this.$route.params.id);
-    },
-    updated() {
-        console.log(this.shop)
     }
 }
 </script>

@@ -73,7 +73,6 @@ export default Vue.component('sortable-table', {
     localFilterDatas() {
       console.log('localFilterDatas')
       let filteredDatas = JSON.parse(JSON.stringify(this.datas))
-
       filteredDatas.map((item, index) => {
         for (let key in item) {
           if (!item.hasOwnProperty(key)) continue
