@@ -69,7 +69,6 @@ export default Vue.component('sortable-table', {
   },
   computed: {
     localFilterDatas() {
-      console.log('localFilterDatas')
       let filteredDatas = JSON.parse(JSON.stringify(this.datas))
       filteredDatas.map((item, index) => {
         for (let key in item) {
@@ -89,8 +88,6 @@ export default Vue.component('sortable-table', {
           })
         }
       })
-
-      console.log(filteredDatas)
 
       return filteredDatas;
     },
@@ -115,8 +112,6 @@ export default Vue.component('sortable-table', {
           return (a === b ? 0 : a > b ? 1 : -1) * order
         })
       }
-
-      console.log(datas)
 
       return datas
     }

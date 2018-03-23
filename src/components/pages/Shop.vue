@@ -18,7 +18,6 @@
                                     <map-image />
                                     <map-shop-location />
                                 </map-canvas>
-                                <!--<img :src="" :alt="" :width="map.width" :height="map.height" />-->
                             </div>
                         </div>
                         
