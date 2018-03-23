@@ -113,13 +113,13 @@ export default {
 
           if (val.prixMax < val.prixMin)
             this.searchDatas.prixMax = val.prixMin + 1
-
-          if (val.prixMin < 0)
-            this.searchDatas.prixMin = 0
-
-          if (val.prixMax <= 0)
-            this.searchDatas.prixMax = 1
         }
+
+        if (val.prixMin < 0)
+          this.searchDatas.prixMin = 0
+
+        if (val.prixMax <= 0)
+          this.searchDatas.prixMax = 1
 
         if (val.refineMin && val.refineMax) {
           if (val.refineMin > val.refineMax)
