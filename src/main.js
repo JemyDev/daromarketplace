@@ -3,7 +3,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import VueResource from "vue-resource";
-import VueClipboards from "vue-clipboards";
+import Vue2Filters from "vue2-filters";
+//import VueClipboard from "vue-clipboard2";
 import { sync } from "vuex-router-sync";
 import App from "./App";
 import router from "./router";
@@ -17,9 +18,10 @@ Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key]);
 });
 
-Vue.use(VueResource);
 Vue.use(Vuex);
-Vue.use(VueClipboards);
+Vue.use(VueResource);
+Vue.use(Vue2Filters);
+//Vue.use(VueClipboard);
 
 sync(store, router);
 

@@ -1,17 +1,17 @@
 import Vue from "vue";
+import { serialize } from "@/helpers/helpers";
 
 export default {
-  async getShopsByItem(item) {
-    let response = await Vue.http
-      .get(`?m=shop&filtre=${item}`)
-      .then(
-        response => response.body,
-        response => {
-          console.error("Api call failed");
-        }
-      );
+  async getShopsByItem(params) {
+    let query = serialize(params);
+    let response = await Vue.http.get(`?m=shop&${query}`).then(
+      response => response.body,
+      response => {
+        console.error("Api call failed");
+      }
+    );
 
-      return response;
+    return response;
   },
   async getShopById(id) {
     let response = await Vue.http.get(`?m=shopd&shopID=${id}`).then(
@@ -24,7 +24,7 @@ export default {
     return response;
   },
   async getAllShops() {
-    let response = await Vue.http.get('?m=shopList').then(
+    let response = await Vue.http.get("?m=shopList").then(
       response => response.body,
       response => {
         console.error("Api call failed");

@@ -28,8 +28,6 @@
           <img :src="getImageSrc(entry.item_id)" alt="" v-if="obj.name === 'name'" width="48">
 
           {{entry[obj.name]}}
-
-          <!-- <copy-clipboard-button :message="getShopLocationCommand(entry.map, entry.x, entry.y)" v-if="obj.name === 'map'">Copy command</copy-clipboard-button> -->
         </td>
       </tr>
     </tbody>
@@ -42,18 +40,18 @@
 
 <script>
 import Vue from 'Vue'
-import helpers from '@/helpers/helpers'
-//import CopyClipboardButton from '@/components/ui/CopyClipboardButton.vue'
+import { getImageItem } from '@/helpers/helpers'
+import VueClipboard from "vue-clipboard2";
 
 export default Vue.component('sortable-table', {
+  directives: {
+    VueClipboard
+  },
   props: {
     datas: { default: () => [], type: [Array, Object, String] },
     columns: Array,
     hasSearch: Boolean
   },
-  /* components: {
-    CopyClipboardButton
-  }, */
   data () {
     let sortOrders = {}
 
@@ -64,13 +62,14 @@ export default Vue.component('sortable-table', {
     return {
       sortKey: '',
       sortOrders: sortOrders,
-      filterKey: null
+      filterKey: null,
+      copyData: 'copy child'
     }
   },
   computed: {
     localFilterDatas() {
-      console.log('localFilterDatas')
       let filteredDatas = JSON.parse(JSON.stringify(this.datas))
+
       filteredDatas.map((item, index) => {
         for (let key in item) {
           if (!item.hasOwnProperty(key)) continue
@@ -89,8 +88,6 @@ export default Vue.component('sortable-table', {
           })
         }
       })
-
-      console.log(filteredDatas)
 
       return filteredDatas;
     },
@@ -116,8 +113,6 @@ export default Vue.component('sortable-table', {
         })
       }
 
-      console.log(datas)
-
       return datas
     }
   },
@@ -128,7 +123,7 @@ export default Vue.component('sortable-table', {
     getImageSrc(itemId) {
       if (!itemId) return
 
-      return helpers.getImageItem(itemId);
+      return getImageItem(itemId);
     },
     getShopLocationCommand(map, x, y) {
       return `/nav ${map} ${x}/${y}`

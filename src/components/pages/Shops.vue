@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import helpers from '@/helpers/helpers'
 import { mapGetters, mapActions } from 'vuex'
 import LayoutMain from '@/components/layouts/main'
 import SortableTable from '@/components/ui/SortableTable'
@@ -36,7 +35,7 @@ export default {
     },
     data() {
         return {
-            searchTerm: this.$route.query.searchTerm,
+            searchTerm: this.$route.query.filtre,
             tableSearchTerm: null,
             listColumns: [
                 {name: 'name',   label: 'Nom objet', filters: ['formatItemName']},
@@ -61,19 +60,17 @@ export default {
         ]),
         redirectToShop(shopId) {
             this.$router.push({name: 'shop', params: {id: shopId}})
-        },
-        getImageSrc(itemId) {
-            return helpers.getImageItem(itemId);
         }
     },
     created () {
-        this.getShopsByItem(this.searchTerm)
+        if (!this.searchTerm)
+            this.$router.push({name: 'home'})
+
+        this.getShopsByItem(this.$route.query)
     },
     updated() {
-        if (this.searchTerm !== this.$route.query.searchTerm)
-            this.searchTerm = this.$route.query.searchTerm
-
-
+        if (this.searchTerm !== this.$route.query.filtre)
+            this.searchTerm = this.$route.query.filtre
     }
 }
 </script>

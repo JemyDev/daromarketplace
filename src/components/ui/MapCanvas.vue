@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import helpers from '@/helpers/helpers'
+import { getImageMap } from '@/helpers/helpers'
 
 export default {
     props: ['mapName', 'coords'],
@@ -43,7 +43,7 @@ export default {
     },
     computed: {
         mapUrl() {
-            return helpers.getImageMap(this.mapName)
+            return getImageMap(this.mapName)
         }
     },
     provide() {

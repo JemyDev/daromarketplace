@@ -1,4 +1,5 @@
 import DaroApi from "@/api/"
+import categories from '@/datas/categories'
 
 const state = {
   shop: {
@@ -8,12 +9,14 @@ const state = {
   allShops: {
     isLoading: false,
     list: []
-  }
+  },
+  categories: categories
 }
 
 const getters = {
   shop: state => state.shop,
-  allShops: state => state.allShops
+  allShops: state => state.allShops,
+  categories: state => state.categories
 }
 
 const actions = {
@@ -29,11 +32,11 @@ const actions = {
       commit("unsetLoading", {type: 'shop'})
     }
   },
-  async getShopsByItem({ commit, dispatch }, query) {
+  async getShopsByItem({ commit, dispatch }, params) {
     try {
       commit("setLoading", {type: 'allShops'})
 
-      const response = await DaroApi.getShopsByItem(query)
+      const response = await DaroApi.getShopsByItem(params)
 
       commit("setAllShops", response)
       commit("unsetLoading", {type: 'allShops'})

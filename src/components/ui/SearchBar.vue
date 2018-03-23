@@ -2,7 +2,7 @@
   <form @submit.prevent="search" id="form-buscar">
     <div class="form-group">
       <div class="input-group">
-        <input type="search" name="searchBar" class="form-control" :class="cls" :placeholder="placeholder" v-model="searchTerm" :autofocus="autofocus" />
+        <input type="search" name="searchBar" class="form-control" :class="cls" :placeholder="placeholder" v-model.trim.lazy="searchTerm" :autofocus="autofocus" />
         <span class="input-group-btn">
           <button class="btn btn-success" type="submit">
             <i class="fa fa-search"></i> Rechercher
@@ -10,6 +10,7 @@
         </span>
       </div>
     </div>
+    <slot></slot>
   </form>
 </template>
 
