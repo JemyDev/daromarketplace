@@ -9,13 +9,28 @@ export default {
             return this.provider.coords.y
         }
     },
+    watch: {
+        '$route.params.id': id => {
+            this.drawLocation()
+        }
+    },
+    methods: {
+        drawLocation() {
+            if(!this.provider.context) return
+            const ctx = this.provider.context
+            ctx.beginPath();
+            ctx.arc(this.shopX, this.shopY, 4, 0, 2*Math.PI);
+            ctx.fillStyle = 'blue';
+            ctx.fill();
+            ctx.clearRect(0, 0, 0, 0);
+        }
+    },
     render () {
-        if(!this.provider.context) return;
-        const ctx = this.provider.context;
 
-        ctx.fillStyle = 'red';
-        ctx.fillRect(this.shopX, this.shopY, 5, 5);
-
+        setTimeout(() => {
+            this.drawLocation();
+        }, 1000)
+        
         return true;
     }
 }
